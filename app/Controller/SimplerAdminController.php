@@ -153,18 +153,20 @@ class SimplerAdminController extends AppController {
 	
 	}
 
-	public function delete_posts($id = null)
+	public function post_delete($id = null)
 	{
-        if ($this->request->is('post'))
-        {
+        if ($this->request->is('post')){
+
             $this->Post->id = $id;
             if($this->Post->delete()){
+				$this->Session->setFlash('記事の削除が完了しました','Flash/success');
+			} else {
+				$this->Session->setFlash('記事の削除が完了しました','Flash/error');
+			}
 
-            }
-
-            $this->redirect(['action' => 'posts']);
         }
 
+		$this->redirect(['action' => 'posts']);
 	}
 
     public function save_draft($id)

@@ -123,3 +123,7 @@ span.publish_status{
 .admin_list_sub_area{
 	width: 20%;
 }
+
+.post_delete_button_area {
+	margin: 30px 0 ;
+}
