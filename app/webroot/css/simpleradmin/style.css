@@ -1,0 +1,50 @@
+body {
+    background-color: #EEE;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 30px 15px;
+    margin: 50px auto 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    border: #DDD solid 1px;
+}
+
+.login-title {
+    margin: 20px 0;
+}
+
+.table-user tr th {
+    width: 260px;
+}
+.table-skill tr th {
+    width: 200px;
+}
+
+.table th.actions, .table td.actions {
+    width: 120px;
+    text-align: center;
+}
+
+.table td.actions .btn-block {
+    margin: 5px 0;
+}
+
+.skill-caption td {
+    word-break: break-word;
+}
+
+.error-message {
+    margin: 15px 0;
+    color: #d9534f;
+}
+
+.skill_view_tag {
+    font-size: 12px;
+    margin: 0 5px;
+}
+
+.delivery_status_label {
+    font-size: 14px;
+}
