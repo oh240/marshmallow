@@ -50,7 +50,7 @@ class AppController extends Controller
 		],
 		'Session',
 		'Cookie',
-		//'DebugKit.Toolbar',
+		'DebugKit.Toolbar',
 	];
 
 	public function beforeFilter()

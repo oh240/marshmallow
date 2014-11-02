@@ -9,6 +9,11 @@ class SimplerAdminController extends AppController {
 
 	public $uses = ['User','Post'];
 
+    public $components = [
+        'Paginator',
+        'RequestHandler'
+    ];
+
 	public function beforeFilter()
 	{
 		parent::beforeFilter();
@@ -65,31 +70,61 @@ class SimplerAdminController extends AppController {
 
     public function posts()
     {
+        $this->Paginator->settings = [
+            'order' => 'Post.created DESC',
+            'limit' => 25
+        ];
 
+        $posts = $this->paginate('Post');
+
+        $this->set(compact('posts'));
     }
 
 	public function add_post()
 	{
+        if ($this->request->is('post')){
+
+            if(isset($this->params['data']['publish'])){
+                $this->_publish_post($this->request->data);
+            } else {
+                $this->_draft_posts($this->request->data);
+            }
+
+            //投稿した編集ページにリダイレクトするように修正する
+            //$this->referer($this->referer());
+        }
 
 	}
 
     /**
      * 記事を公開するメソッド
      */
-    public function publish_post()
+    private function _publish_post($data)
     {
-        if ($this->request->is('post')){
-
+        $data['Post']['published'] = true;
+        if ($this->Post->save($data)){
+            //下書き保存完了
+            $this->Session->setFlash('記事の公開が完了しました','Flash/success');
+        } else {
+            //下書き保存失敗時
+            $this->Session->setFlash('記事の公開がに失敗しました。入力内容を確認して下さい。','Flash/error');
+            //バリデーションでエラーに成ったらエラーを返す。
         }
+
     }
 
     /**
      * 下書き保存するメソッド
      */
-    public function draft_posts()
+    private function _draft_posts($data)
     {
-
-        if ($this->request->is('post')){
+        $data['Post']['published'] = false;
+        if ($this->Post->save($data)){
+            //下書き保存完了時
+            $this->Session->setFlash('下書き保存を完了しました。','Flash/success');
+        } else {
+            //下書き保存失敗時
+            $this->Session->setFlash('記事の公開がに失敗しました。入力内容を確認して下さい。','Flash/error');
 
         }
 
@@ -99,8 +134,22 @@ class SimplerAdminController extends AppController {
      * 編集を行うメソッド
      * @param $id
      */
-	public function edit_posts($id)
+	public function edit_post($id)
 	{
+        if ($this->request->is('post') || $this->request->is('put')){
+            $this->Post->id = $id;
+            if(isset($this->params['data']['publish'])){
+                $this->_publish_post($this->request->data);
+            } else {
+                $this->_draft_posts($this->request->data);
+            }
+
+            $this->redirect($this->referer());
+
+        } else {
+
+            $this->request->data = $this->Post->findById($id);
+        }
 	
 	}
 
