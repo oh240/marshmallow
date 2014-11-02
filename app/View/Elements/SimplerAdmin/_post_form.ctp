@@ -40,7 +40,7 @@ $this->Form->hidden('Post.id');
     <?=
     $this->Form->submit('投稿する',[
         'class' => 'btn btn-primary fl-r',
-        'name' => 'submit'
+        'name' => 'publish'
     ]);
     ?>
 </div>

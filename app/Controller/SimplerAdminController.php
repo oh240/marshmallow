@@ -33,7 +33,6 @@ class SimplerAdminController extends AppController {
 			}
 
 			$this->redirect([
-				'controller' => 'simpleradmin',
 				'action' => 'login'
 			]);
 		}
@@ -65,25 +64,26 @@ class SimplerAdminController extends AppController {
 
 	public function index() 
 	{
-
+		$this->redirect([
+			'action' => 'posts'
+		]);
 	}
 
     public function posts()
     {
         $this->Paginator->settings = [
             'order' => 'Post.created DESC',
-            'limit' => 25
+            'limit' => 25,
         ];
 
         $posts = $this->paginate('Post');
-
         $this->set(compact('posts'));
     }
 
 	public function add_post()
 	{
         if ($this->request->is('post')){
-
+            $this->Post->create();
             if(isset($this->params['data']['publish'])){
                 $this->_publish_post($this->request->data);
             } else {
@@ -91,7 +91,7 @@ class SimplerAdminController extends AppController {
             }
 
             //投稿した編集ページにリダイレクトするように修正する
-            //$this->referer($this->referer());
+            $this->referer($this->referer());
         }
 
 	}
@@ -107,7 +107,7 @@ class SimplerAdminController extends AppController {
             $this->Session->setFlash('記事の公開が完了しました','Flash/success');
         } else {
             //下書き保存失敗時
-            $this->Session->setFlash('記事の公開がに失敗しました。入力内容を確認して下さい。','Flash/error');
+            $this->Session->setFlash('記事の公開が失敗しました。入力内容を確認して下さい。','Flash/error');
             //バリデーションでエラーに成ったらエラーを返す。
         }
 
@@ -124,7 +124,7 @@ class SimplerAdminController extends AppController {
             $this->Session->setFlash('下書き保存を完了しました。','Flash/success');
         } else {
             //下書き保存失敗時
-            $this->Session->setFlash('記事の公開がに失敗しました。入力内容を確認して下さい。','Flash/error');
+            $this->Session->setFlash('記事の下書き保存に失敗しました。入力内容を確認して下さい。','Flash/error');
 
         }
 
@@ -134,7 +134,7 @@ class SimplerAdminController extends AppController {
      * 編集を行うメソッド
      * @param $id
      */
-	public function edit_post($id)
+	public function edit_post($id = null)
 	{
         if ($this->request->is('post') || $this->request->is('put')){
             $this->Post->id = $id;
@@ -153,8 +153,17 @@ class SimplerAdminController extends AppController {
 	
 	}
 
-	public function delete_posts()
+	public function delete_posts($id = null)
 	{
+        if ($this->request->is('post'))
+        {
+            $this->Post->id = $id;
+            if($this->Post->delete()){
+
+            }
+
+            $this->redirect(['action' => 'posts']);
+        }
 
 	}
 

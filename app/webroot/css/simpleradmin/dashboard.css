@@ -119,3 +119,8 @@ span.publish_status{
     line-height: 1;
     color: #fff;
 }
+
+.admin_list_sub_area{
+	
+	width: 20%;
+}

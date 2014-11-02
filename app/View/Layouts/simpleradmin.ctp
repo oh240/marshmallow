@@ -23,32 +23,7 @@
         <?= $this->element('SimplerAdmin/header');?>
         <div class="container">
             <?php if ($this->Session->check('Auth.User.id')) :?>
-                <div class="col-sm-3 col-md-2 sidebar">
-                    <ul class="nav nav-sidebar">
-                        <li class="active">
-                            <?=
-                                $this->Html->link('新しい記事の投稿',[
-                                    'controller' => 'simpleradmin',
-                                    'action' => 'add_post',
-                                ]);
-                            ?>
-                        </li>
-                        <li>
-                            <?=
-                                $this->Html->link('記事の管理',[
-                                    'controller' => 'simpleradmin',
-                                    'action' => 'posts',
-                                ]);
-                            ?>
-                        </li>
-                        <li>
-                            <a href="#">コメントの管理</a>
-                        </li>
-                        <li>
-                            <a href="#">設定</a>
-                        </li>
-                    </ul>
-                </div>
+				<?= $this->element('SimplerAdmin/sidebar');?>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                     <?php echo $this->Session->flash(); ?>
                     <?php echo $this->fetch('content'); ?>
