@@ -2,6 +2,14 @@ body {
     background-color: #EEE;
 }
 
+.fl-l{
+    float: left;
+}
+
+.fl-r{
+    float: right;
+}
+
 .form-signin {
     max-width: 330px;
     padding: 30px 15px;

@@ -68,6 +68,7 @@
 }
 @media (min-width: 768px) {
     .main {
+        padding-top: 80px;
         padding-right: 40px;
         padding-left: 40px;
     }
@@ -75,7 +76,6 @@
 .main .page-header {
     margin-top: 0;
 }
-
 
 /*
  * Placeholder dashboard ideas
@@ -94,4 +94,14 @@
 .placeholder img {
     display: inline-block;
     border-radius: 50%;
+}
+
+.post_button_area {
+    width: 25%;
+    float: right;
+}
+
+.post-form-input-title{
+    font-size: 16px;
+    font-weight: bold;
 }

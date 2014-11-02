@@ -27,7 +27,12 @@
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
                         <li class="active">
-                            <a href="#">新しい記事の投稿</a>
+                            <?=
+                                $this->Html->link('新しい記事の投稿',[
+                                    'controller' => 'simpleradmin',
+                                    'action' => 'post_add',
+                                ]);
+                            ?>
                         </li>
                         <li>
                             <a href="#">記事の管理</a>

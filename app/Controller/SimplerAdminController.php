@@ -68,7 +68,7 @@ class SimplerAdminController extends AppController {
 
     }
 
-	public function add_posts()
+	public function add_post()
 	{
 
 	}
