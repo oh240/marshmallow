@@ -11,13 +11,20 @@ class PostsController extends AppController {
         'RequestHandler'
     ];
 
+	public $uses = ['Post','Setting'];
+
 	public function beforeFilter()
 	{
 		parent::beforeFilter();
 		$this->Auth->allow();
-		$this->theme = 'SampleTheme';
+		$setting = $this->Setting->find('all');
+
+		$this->theme = $setting[2]['Setting']['value'];
 		$this->layout = 'theme';
+
 		Configure::write('debug', 0);
+		$recent_posts = $this->Post->findByRecentArticles();
+		$this->set(compact('recent_posts'));
 	}
 
 	/**
@@ -26,7 +33,10 @@ class PostsController extends AppController {
 	 */
 	public function index()
 	{
-        $this->Paginator->settings = [
+		$this->Paginator->settings = [
+			'conditions' => [
+				'Post.published' => 1
+			],
             'order' => 'Post.created DESC',
             //'limit' => 10,
         ];

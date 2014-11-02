@@ -2,9 +2,8 @@
 	<ul class="nav nav-sidebar">
 		<li>
 			<?=
-				$this->Html->link('記事の管理',[
-					'controller' => 'simpleradmin',
-					'action' => 'posts',
+				$this->Html->link('ブログに戻る',[
+					'controller' => '/',
 				]);
 			?>
 		</li>
@@ -17,7 +16,18 @@
 			?>
 		</li>
 		<li>
-			<a href="#">設定</a>
+			<?=
+				$this->Html->link('記事の一覧',[
+					'action' => 'posts',
+				]);
+			?>
+		</li>
+		<li>
+			<?=
+				$this->Html->link('設定',[
+					'action' => 'setting',
+				]);
+			?>
 		</li>
 	</ul>
 </div>

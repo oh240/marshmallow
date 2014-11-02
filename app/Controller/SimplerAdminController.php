@@ -172,4 +172,9 @@ class SimplerAdminController extends AppController {
 
     }
 
+	public function setting()
+	{
+	
+	}
+
 }

@@ -36,4 +36,19 @@ class Post extends AppModel {
 			]
 		]);
 	}
+
+	function findByRecentArticles()
+	{
+		return $this->find('all',[
+			'conditions' => [
+				'published' => 1
+			],
+			'limit' => 5
+		]);
+	}
+
+	function findByArchive()
+	{
+	
+	}
 }

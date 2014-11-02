@@ -97,7 +97,7 @@
 }
 
 .post_button_area {
-    width: 25%;
+    width: 33%;
     float: right;
 }
 
@@ -121,6 +121,5 @@ span.publish_status{
 }
 
 .admin_list_sub_area{
-	
 	width: 20%;
 }
