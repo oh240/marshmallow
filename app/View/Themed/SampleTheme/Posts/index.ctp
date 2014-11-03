@@ -12,7 +12,7 @@
 			<hr>
 			<div class="entry-meta">
 				<span class="entry-date">
-					<?= $post['Post']['modified'];?>
+					<?= $this->Spl->date_format($post['Post']['modified']);?>
 				</span> 
 			</div><!-- .entry-meta -->
 		</header><!-- .entry-header -->
