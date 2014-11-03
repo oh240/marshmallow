@@ -9,7 +9,7 @@
 							$this->Html->link($recent_post['Post']['title'],[
 								'controller' => 'posts',
 								'action' => 'view',
-								$recent_post['Post']['id']
+								'id' => $recent_post['Post']['id']
 							]);
 						?>
 					</li>
@@ -20,9 +20,6 @@
 				<h1 class="widget-title">アーカイブ</h1>
 				<ul>
 					<li>
-						<a href='http://fordevelop.devmasso.info/wordpress/?m=201405'>
-							2014年5月
-						</a>
 					</li>
 				</ul>
 			</aside>

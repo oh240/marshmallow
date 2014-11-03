@@ -33,6 +33,7 @@ class PostsController extends AppController {
 	 */
 	public function index()
 	{
+		$this->set('title_for_layout','Sample Blog');
 		$this->set('meta_keyword','デフォルトのキーワード');
 		$this->set('meta_description','デフォルトのディスクリプション');
 		$this->Paginator->settings = [
@@ -54,6 +55,7 @@ class PostsController extends AppController {
 	{
 		$post = $this->Post->findByArticleId($id);
 
+		$this->set('title_for_layout',$post['Post']['title']);
 		$this->set('meta_keyword',$post['Post']['title']);
 		$this->set('meta_description',$post['Post']['title']);
 

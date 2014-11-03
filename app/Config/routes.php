@@ -28,7 +28,8 @@
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */
-	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+	Router::connect('/simpleradmin/*', array('controller' => 'simpleradmin'));
+	Router::connect('/posts/:id', array('controller' => 'posts', 'action' => 'view'),array('pass'=>array('id'),'id'=>'[0-9]+'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on
@@ -40,4 +41,4 @@
  * Load the CakePHP default routes. Only remove this if you do not want to use
  * the built-in default routes.
  */
-	require CAKE . 'Config' . DS . 'routes.php';
+	//require CAKE . 'Config' . DS . 'routes.php';

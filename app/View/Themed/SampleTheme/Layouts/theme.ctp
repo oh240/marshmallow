@@ -12,7 +12,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
-	<title></title>
+	<title><?= $title_for_layout ;?></title>
 	<?= $this->Html->css('SampleTheme/style');?>
 	<?php
 		echo $this->Html->meta('keywords',$meta_keyword);

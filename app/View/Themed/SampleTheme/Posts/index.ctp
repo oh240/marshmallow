@@ -5,7 +5,7 @@
 				<?= 
 					$this->Html->link($post['Post']['title'],[
 						'action' => 'view',
-						$post['Post']['id'],
+						'id' => $post['Post']['id'],
 					]);
 				?>
 			</h1>
