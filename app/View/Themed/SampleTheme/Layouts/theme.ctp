@@ -14,7 +14,6 @@
 	<meta name="viewport" content="width=device-width">
 	<title></title>
 	<?= $this->Html->css('SampleTheme/style');?>
-	<?= $this->Html->css('SampleTheme/custom');?>
 	<!--[if lt IE 9]>
 	<script src="http://fordevelop.devmasso.info/wordpress/wp-content/themes/twentyfourteen/js/html5.js"></script>
 	<![endif]-->
@@ -46,37 +45,7 @@
 					</div><!-- #content -->
 				</div><!-- #primary -->
 			</div><!-- #main-content -->
-
-			<div id="secondary">
-				<div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
-					<aside id="recent-posts-2" class="widget widget_recent_entries">
-						<h1 class="widget-title">最近の投稿</h1>
-						<ul>
-							<?php foreach ($recent_posts as $recent_post) :?>
-							<li>
-								<?= 
-									$this->Html->link($recent_post['Post']['title'],[
-										'controller' => 'posts',
-										'action' => 'view',
-										$recent_post['Post']['id']
-									]);
-								?>
-							</li>
-							<?php endforeach ;?>
-						</ul>
-					</aside>
-					<aside id="archives-2" class="widget widget_archive">
-						<h1 class="widget-title">アーカイブ</h1>
-						<ul>
-							<li>
-								<a href='http://fordevelop.devmasso.info/wordpress/?m=201405'>
-									2014年5月
-								</a>
-							</li>
-						</ul>
-					</aside>
-				</div><!-- #primary-sidebar -->
-			</div><!-- #secondary -->
+			<?= $this->element('sidebar');?>
 		</div><!-- #main -->
 	<footer id="colophon" class="site-footer" role="contentinfo">
 		<div class="site-info">
