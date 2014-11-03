@@ -14,6 +14,10 @@
 	<meta name="viewport" content="width=device-width">
 	<title></title>
 	<?= $this->Html->css('SampleTheme/style');?>
+	<?php
+		echo $this->Html->meta('keywords',$meta_keyword);
+		echo $this->Html->meta('description',$meta_description);
+	?>
 	<!--[if lt IE 9]>
 	<script src="http://fordevelop.devmasso.info/wordpress/wp-content/themes/twentyfourteen/js/html5.js"></script>
 	<![endif]-->

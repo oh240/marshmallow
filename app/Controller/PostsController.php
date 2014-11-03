@@ -33,12 +33,13 @@ class PostsController extends AppController {
 	 */
 	public function index()
 	{
+		$this->set('meta_keyword','デフォルトのキーワード');
+		$this->set('meta_description','デフォルトのディスクリプション');
 		$this->Paginator->settings = [
 			'conditions' => [
 				'Post.published' => 1
 			],
             'order' => 'Post.created DESC',
-            //'limit' => 10,
         ];
 
         $posts = $this->paginate('Post');
@@ -52,6 +53,10 @@ class PostsController extends AppController {
 	public function view($id) 
 	{
 		$post = $this->Post->findByArticleId($id);
+
+		$this->set('meta_keyword',$post['Post']['title']);
+		$this->set('meta_description',$post['Post']['title']);
+
 		$this->set(compact('post'));
 	}
 
