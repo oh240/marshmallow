@@ -28,7 +28,9 @@
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */
-	Router::connect('/simpleradmin/*', array('controller' => 'simpleradmin'));
+	Router::connect('/simpleradmin/:action', array('controller' => 'simpleradmin'));
+	Router::connect('/simpleradmin/:action/:id', array('controller' => 'simpleradmin'),array('pass'=>array('id'),'id'=>'[0-9]+'));
+	Router::connect('/simpleradmin', array('controller' => 'simpleradmin'));
 	Router::connect('/posts/:id', array('controller' => 'posts', 'action' => 'view'),array('pass'=>array('id'),'id'=>'[0-9]+'));
 
 /**
