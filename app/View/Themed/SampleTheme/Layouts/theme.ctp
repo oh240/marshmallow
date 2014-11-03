@@ -26,7 +26,11 @@
 	<![endif]-->
 	<script type='text/javascript' src='http://fordevelop.devmasso.info/wordpress/wp-includes/js/jquery/jquery.js?ver=1.11.0'></script>
 	<script type='text/javascript' src='http://fordevelop.devmasso.info/wordpress/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
-	<body class="home blog masthead-fixed list-view full-width grid">
+	<?php if ($this->action === 'index') :?>
+		<body class="home blog masthead-fixed list-view full-width grid">
+	<?php else :?>
+		<body class="home blog masthead-fixed full-width grid">
+	<?php endif;?>
 	<div id="page" class="hfeed site">
 	
 		<header id="masthead" class="site-header" role="banner">
@@ -41,7 +45,7 @@
 			</div>
 		</header><!-- #masthead -->
 
-		<div id="main" class="site-main">
+		<div id="main" class="site-main" role="main">
 			<div id="main-content" class="main-content">
 				<div id="primary" class="content-area">
 					<div id="content" class="site-content">
