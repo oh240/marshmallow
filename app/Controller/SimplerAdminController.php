@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('File','Utility');
 
 /**
  * SimplerAdmin Controller
@@ -9,7 +10,7 @@ App::uses('AppController', 'Controller');
 class SimplerAdminController extends AppController
 {
 
-    public $uses = ['User', 'Post','Setting'];
+    public $uses = ['User', 'Post','Setting','Img'];
 
     public $components = array(
         'Paginator',
@@ -204,10 +205,37 @@ class SimplerAdminController extends AppController
 				$this->Session->setFlash('設定の保存が失敗しました。','Flash/error');
 			}
 
-
 		} else {
 			$this->request->data = $this->Setting->find('first');
 		}
     }
+
+	public function test_upload()
+	{
+	
+	}
+
+	public function ajax_img_upload()
+	{
+		$this->autoRender = false;
+		$this->autoLayout = false;
+		if ($this->request->is('ajax')){
+
+            //Typeによって作成する拡張子の分岐
+			//ファイルの保存処理
+			$mime_type = '.png';
+			$name = $this->Img->getUniqueId().$mime_type;
+			move_uploaded_file($this->request->data['Img']['tmp_name'], IMAGES.$name);
+			$this->Img->create();
+			$img_db_data['Img']['name'] = $name;
+			$img_db_data['Img']['size'] = $this->request->data['Img']['size'];
+
+			if ($this->Img->save($img_db_data)){
+                //生成したファイル名を返す。
+				echo json_encode($img_db_data['Img']['name']);
+			}
+			exit;
+		}
+	}
 
 }
