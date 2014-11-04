@@ -53,6 +53,10 @@
 		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ImgAddModal">
 			新しく画像をアップロードして挿入する
 		</button>
+		<!-- Button trigger modal -->
+		<button id="ImgAppendButton" class="btn btn-success btn-lg" data-toggle="modal" data-target="#ImgListModal">
+			既存の画像を挿入する
+		</button>
 	</div>
 
 
@@ -72,5 +76,6 @@
 	<?php endif ;?>
 
 	<?= $this->element('SimplerAdmin/img_add_modal');?>
+	<?= $this->element('SimplerAdmin/img_list_modal');?>
 
 </div>

@@ -215,6 +215,30 @@ class SimplerAdminController extends AppController
 	
 	}
 
+	public function ajax_img_load()
+	{
+	
+		$this->autoRender = false;
+		$this->autoLayout = false;
+
+		if ($this->request->is('ajax')){
+
+			$imgs = $this->Img->find('all',[
+				'fields' => [
+					'name'
+				],
+				'limit' => 6
+			]);
+
+			foreach($imgs as $key => $img){
+				$imgs[$key]['Img']['name'] = FULL_BASE_URL.DS.'files'.DS.$img['Img']['name'];
+			}
+
+			echo json_encode($imgs);
+			exit;
+		}
+	}
+
 	public function ajax_img_upload()
 	{
 		$this->autoRender = false;
