@@ -3,7 +3,7 @@
 <head>
     <?php echo $this->Html->charset(); ?>
     <title>
-        <?php echo $this->fetch('title'); ?>
+        <?= $action_name .' | '. $title_for_layout; ?>
     </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <?php

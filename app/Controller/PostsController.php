@@ -17,13 +17,12 @@ class PostsController extends AppController {
 	{
 		parent::beforeFilter();
 		$this->Auth->allow();
-		$setting = $this->Setting->find('all');
+		$setting = $this->Setting->find('first');
 		$this->theme = 'SampleTheme';
 		$this->layout = 'theme';
-
-		Configure::write('debug', 0);
+		Configure::write('debug', 2);
 		$recent_posts = $this->Post->findByRecentArticles();
-		$this->set(compact('recent_posts'));
+		$this->set(compact('recent_posts','setting'));
 	}
 
 	/**
@@ -32,7 +31,8 @@ class PostsController extends AppController {
 	 */
 	public function index()
 	{
-		$this->set('title_for_layout','Sample Blog');
+		$setting = $this->Setting->find('first');
+		$this->set('title_for_layout',$setting['Setting']['site_name']);
 		$this->set('meta_keyword','デフォルトのキーワード');
 		$this->set('meta_description','デフォルトのディスクリプション');
 		$this->Paginator->settings = [

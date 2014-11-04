@@ -20,8 +20,9 @@ class SimplerAdminController extends AppController
     {
         parent::beforeFilter();
         $this->Auth->allow('user_add');
-
         $this->layout = 'simpleradmin';
+		$setting = $this->Setting->find('first');
+		$this->set('title_for_layout',$setting['Setting']['site_name']);
     }
 
     public function user_add()
@@ -44,12 +45,12 @@ class SimplerAdminController extends AppController
     public function login()
     {
 
+		$this->set('title_for_layout',$setting['Setting']['site_name']);
+		$this->set('action_name','ログイン');
         if ($this->Auth->login()) {
-
             $this->redirect([
                 'action' => 'index'
             ]);
-
         }
 
     }
@@ -57,7 +58,6 @@ class SimplerAdminController extends AppController
     public function logout()
     {
         if ($this->Auth->logout()) {
-
             $this->redirect([
                 'action' => 'login'
             ]);
@@ -73,6 +73,7 @@ class SimplerAdminController extends AppController
 
     public function posts()
     {
+		$this->set('action_name','記事の一覧');
         $this->Paginator->settings = [
             'order' => 'Post.created DESC',
             'limit' => 25,
@@ -84,6 +85,7 @@ class SimplerAdminController extends AppController
 
     public function add_post()
     {
+		$this->set('action_name','記事の新規投稿');
         if ($this->request->is('post')) {
             $this->Post->create();
             if (isset($this->params['data']['publish'])) {
@@ -142,6 +144,8 @@ class SimplerAdminController extends AppController
      */
     public function edit_post($id = null)
     {
+
+		$this->set('action_name','記事の編集');
         if ($this->request->is('post') || $this->request->is('put')) {
             $this->Post->id = $id;
             if (isset($this->params['data']['publish'])) {
@@ -182,6 +186,7 @@ class SimplerAdminController extends AppController
 
     public function setting()
     {
+		$this->set('action_name','サイト設定');
 		if ($this->request->is('post') || $this->request->is('put')){
 
 			$setting = $this->Setting->find('first',[

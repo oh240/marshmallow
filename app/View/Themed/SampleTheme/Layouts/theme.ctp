@@ -32,19 +32,17 @@
 		<body class="home blog masthead-fixed full-width grid">
 	<?php endif;?>
 	<div id="page" class="hfeed site">
-	
 		<header id="masthead" class="site-header" role="banner">
 			<div class="header-main">
 				<h1 class="site-title">
 					<?= 
-						$this->Html->link('Sample Blog',[
+						$this->Html->link($setting['Setting']['site_name'],[
 							'controller' => '/',
 						]);
 					?>
 				</h1>
 			</div>
 		</header><!-- #masthead -->
-
 		<div id="main" class="site-main" role="main">
 			<div id="main-content" class="main-content">
 				<div id="primary" class="content-area">
