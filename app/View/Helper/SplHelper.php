@@ -40,6 +40,14 @@ class SplHelper extends Helper {
 
 	public function Ellipsis($string, $limit = 30)
 	{
-		return $string;
+        $remove_tags_string = strip_tags($string);
+
+        $tmp = mb_substr($remove_tags_string,0,$limit);
+
+        if (mb_strlen($remove_tags_string) > $limit) {
+            $tmp.=' ...';
+        }
+
+        return h($tmp);
 	}
 }

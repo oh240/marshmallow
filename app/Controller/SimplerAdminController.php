@@ -7,7 +7,7 @@ App::uses('File','Utility');
  * SimplerAdmin Controller
  *
  */
-class SimplerAdminController extends AppController
+class SimpleradminController extends AppController
 {
 
     public $uses = ['User', 'Post','Setting','Img'];
