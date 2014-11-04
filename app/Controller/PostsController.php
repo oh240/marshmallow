@@ -20,7 +20,7 @@ class PostsController extends AppController {
 		$setting = $this->Setting->find('first');
 		$this->theme = 'SampleTheme';
 		$this->layout = 'theme';
-		Configure::write('debug', 2);
+		Configure::write('debug', 0);
 		$recent_posts = $this->Post->findByRecentArticles();
 		$this->set(compact('recent_posts','setting'));
 	}

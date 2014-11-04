@@ -1,9 +1,18 @@
 $(function(){
+
+    /**
+     * モーダルの出力ボタンを押した時にデフォルトのSubmit処理を無効にする。
+     */
+    $('#ImgUpModalButton').click(function () {
+        event.preventDefault();
+    });
+
 	/**
 	 * 画像の非同期でのアップロード処理
 	 */
 	$('#ImgUploadButton').click(function(){
-		var input_data = new FormData($('#UploadImgForm')[0]);
+        event.preventDefault();
+        var input_data = new FormData($('#UploadImgForm')[0]);
 		$.ajax({
 			type: "POST",
 			url: "/simpleradmin/ajax_img_upload",
@@ -20,7 +29,8 @@ $(function(){
 
 
 	$('#ImgAppendButton').click(function(){
-		$.ajax({
+        event.preventDefault();
+        $.ajax({
 			type: "POST",
 			url: "/simpleradmin/ajax_img_load",
 			contentType: false,

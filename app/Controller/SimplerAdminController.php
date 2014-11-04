@@ -245,12 +245,6 @@ class SimplerAdminController extends AppController
 		$this->autoLayout = false;
 
 		if ($this->request->is('ajax')){
-            //Typeによって作成する拡張子の分岐
-			$type = [
-                'image/png' => '.png',
-                'image/jpeg' => '.jpg',
-                'image/gif' => '.gif',
-            ];
 
 			$mime_type = $this->Img->getMimeType($this->request->data['Img']['type']);
 			$name = $this->Img->getUniqueId().$mime_type;

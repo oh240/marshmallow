@@ -17,7 +17,7 @@
 			</div><!-- .entry-meta -->
 		</header><!-- .entry-header -->
 		<div class="entry-content">
-			<?= h($post['Post']['body']); ?>
+			<?= $this->Spl->Ellipsis($post['Post']['body']); ?>
 		</div><!-- .entry-content -->
 	</article>
 <?php endforeach;?>

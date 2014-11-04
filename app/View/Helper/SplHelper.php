@@ -37,4 +37,9 @@ class SplHelper extends Helper {
 		$format = 'Y/n/j H:i';
 		return date($format,strtotime($datetime));
 	}
+
+	public function Ellipsis($string, $limit = 30)
+	{
+		return $string;
+	}
 }

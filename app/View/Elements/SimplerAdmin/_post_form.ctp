@@ -9,12 +9,24 @@
 	<div class="form-group">
 
 		<p class="post-form-input-title">記事のタイトル</p>
+
 		<?php
-		echo $this->Form->input('Post.title',[
-			'class' => 'form-control',
-			'label' => false,
-		]);
+			echo $this->Form->input('Post.title',[
+				'class' => 'form-control',
+				'label' => false,
+			]);
 		?>
+
+		<div class="img_button_area">
+			<!-- Button trigger modal -->
+			<button id="ImgUpModalButton" class="btn btn-default" data-toggle="modal" data-target="#ImgAddModal">
+				<span class="glyphicon glyphicon-upload"></span> 画像をアップロードして追加
+			</button>
+			<!-- Button trigger modal -->
+			<button id="ImgAppendButton" class="btn btn-default" data-toggle="modal" data-target="#ImgListModal">
+				<span class="glyphicon glyphicon-camera"></span> 既存の画像から追加
+			</button>
+		</div>
 	</div>
 
 	<div class="form-group">
@@ -28,38 +40,27 @@
 		?>
 	</div>
 
-
-	<div class="clearfix post_button_area fl-r">
-
-		<?=
-			$this->Form->submit('下書き保存する',[
-				'class' => 'btn btn-default fl-l',
-				'name' => 'draft'
-			]);
-		?>
-
-		<?=
-			$this->Form->submit('投稿する',[
-				'class' => 'btn btn-primary fl-r',
-				'name' => 'publish'
-			]);
-		?>
+	<div class="row clearfix post_button_area fl-r">
+        <div class="col-md-6 clearfix">
+            <?=
+                $this->Form->submit('下書き保存する',[
+                    'class' => 'btn btn-default fl-l',
+                    'name' => 'draft',
+                ]);
+            ?>
+        </div>
+        <div class="col-md-6">
+            <?=
+                $this->Form->submit('投稿する',[
+                    'class' => 'btn btn-primary fl-r',
+                    'name' => 'publish'
+                ]);
+            ?>
+        </div>
 	</div>
 
 	<?= $this->Form->end();?>
-
-	<div class="">
-		<!-- Button trigger modal -->
-		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ImgAddModal">
-			新しく画像をアップロードして挿入する
-		</button>
-		<!-- Button trigger modal -->
-		<button id="ImgAppendButton" class="btn btn-success btn-lg" data-toggle="modal" data-target="#ImgListModal">
-			既存の画像を挿入する
-		</button>
-	</div>
-
-
+	<hr>
 	<?php if ($this->action == 'edit_post'):?>
 		<div class="post_delete_button_area fl-r">
 			<?php
