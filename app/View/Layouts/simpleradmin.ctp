@@ -21,10 +21,10 @@
 </head>
 <body id="sing-in">
     <div>
-        <?= $this->element('SimplerAdmin/header');?>
+        <?= $this->element('Simpleradmin/header');?>
         <div class="container">
             <?php if ($this->Session->check('Auth.User.id')) :?>
-				<?= $this->element('SimplerAdmin/sidebar');?>
+				<?= $this->element('Simpleradmin/sidebar');?>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                     <?php echo $this->Session->flash(); ?>
                     <?php echo $this->fetch('content'); ?>
