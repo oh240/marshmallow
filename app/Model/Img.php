@@ -17,4 +17,14 @@ class Img extends AppModel {
 	{
 		return uniqid(rand());
 	}
+
+	function getMimeType($file_type)
+	{
+		$type = [
+			'image/png' => '.png',
+			'image/jpeg' => '.jpg',
+			'image/gif' => '.gif',
+		];
+		return $type[$file_type];
+	}
 }

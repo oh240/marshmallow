@@ -9,7 +9,7 @@ $(function(){
 			processData: false
 		}).done(function(data) {
 			data = JSON.parse(data);
-			console.log(data);
+			console.log('<img src="'+data+'>');
 		});
 		return false;
 	});

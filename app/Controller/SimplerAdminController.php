@@ -219,20 +219,27 @@ class SimplerAdminController extends AppController
 	{
 		$this->autoRender = false;
 		$this->autoLayout = false;
-		if ($this->request->is('ajax')){
 
+		if ($this->request->is('ajax')){
             //Typeによって作成する拡張子の分岐
-			//ファイルの保存処理
-			$mime_type = '.png';
+			$type = [
+                'image/png' => '.png',
+                'image/jpeg' => '.jpg',
+                'image/gif' => '.gif',
+            ];
+
+			$mime_type = $this->Img->getMimeType($this->request->data['Img']['type']);
 			$name = $this->Img->getUniqueId().$mime_type;
-			move_uploaded_file($this->request->data['Img']['tmp_name'], IMAGES.$name);
+
+			move_uploaded_file($this->request->data['Img']['tmp_name'], POSTIMAGES.$name);
+
 			$this->Img->create();
 			$img_db_data['Img']['name'] = $name;
 			$img_db_data['Img']['size'] = $this->request->data['Img']['size'];
 
 			if ($this->Img->save($img_db_data)){
                 //生成したファイル名を返す。
-				echo json_encode($img_db_data['Img']['name']);
+				echo json_encode(FULL_BASE_URL.DS.'files'.DS.$img_db_data['Img']['name']);
 			}
 			exit;
 		}
