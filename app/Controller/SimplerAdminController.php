@@ -9,7 +9,7 @@ App::uses('AppController', 'Controller');
 class SimplerAdminController extends AppController
 {
 
-    public $uses = ['User', 'Post'];
+    public $uses = ['User', 'Post','Setting'];
 
     public $components = array(
         'Paginator',
@@ -91,9 +91,12 @@ class SimplerAdminController extends AppController
             } else {
                 $this->_draft_posts($this->request->data);
             }
-
+			
             //投稿した編集ページにリダイレクトするように修正する
-            $this->referer($this->referer());
+			$this->redirect([
+				'action' => 'edit_post',
+				'id' =>  $this->Post->getLastInsertId()
+			]);
         }
 
     }
@@ -104,6 +107,7 @@ class SimplerAdminController extends AppController
     private function _publish_post($data)
     {
         $data['Post']['published'] = true;
+		$data['Post']['release_date'] = date('Y-m-d H:i:s');
         if ($this->Post->save($data)) {
             //下書き保存完了
             $this->Session->setFlash('記事の公開が完了しました', 'Flash/success');
@@ -178,7 +182,27 @@ class SimplerAdminController extends AppController
 
     public function setting()
     {
+		if ($this->request->is('post') || $this->request->is('put')){
 
+			$setting = $this->Setting->find('first',[
+				'fields' => [
+					'id'
+				]
+			]);
+
+			$this->Setting->id = $setting['Setting']['id'];
+
+			if($this->Setting->save($this->request->data)){
+				$this->Session->setFlash('設定の保存が完了しました。','Flash/success');
+				$this->redirect($this->referer());
+			} else {
+				$this->Session->setFlash('設定の保存が失敗しました。','Flash/error');
+			}
+
+
+		} else {
+			$this->request->data = $this->Setting->find('first');
+		}
     }
 
 }

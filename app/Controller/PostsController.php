@@ -18,8 +18,7 @@ class PostsController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->allow();
 		$setting = $this->Setting->find('all');
-
-		$this->theme = $setting[2]['Setting']['value'];
+		$this->theme = 'SampleTheme';
 		$this->layout = 'theme';
 
 		Configure::write('debug', 0);
@@ -40,7 +39,7 @@ class PostsController extends AppController {
 			'conditions' => [
 				'Post.published' => 1
 			],
-            'order' => 'Post.created DESC',
+            'order' => 'Post.release_date DESC',
         ];
 
         $posts = $this->paginate('Post');
@@ -53,7 +52,12 @@ class PostsController extends AppController {
 	 */
 	public function view($id) 
 	{
+
 		$post = $this->Post->findByArticleId($id);
+
+		if (!$post){
+			throw new NotFoundException("404");
+		}
 
 		$this->set('title_for_layout',$post['Post']['title']);
 		$this->set('meta_keyword',$post['Post']['title']);

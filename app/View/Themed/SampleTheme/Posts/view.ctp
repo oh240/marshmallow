@@ -10,8 +10,8 @@
 		</h1>
 		<hr>
 		<div class="entry-meta">
-			<span class="entry-date" datetime="2014-05-26T05:21:36+00:00">
-				<?= $this->Spl->date_format($post['Post']['modified']);?>
+			<span class="entry-date">
+				<?= $this->Spl->date_format($post['Post']['release_date']);?>
 			</span> 
 		</div><!-- .entry-meta -->
 	</header><!-- .entry-header -->

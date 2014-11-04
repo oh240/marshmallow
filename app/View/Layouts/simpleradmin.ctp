@@ -17,6 +17,7 @@
     ?>
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+	<meta name="viewport" content="initial-scale=1.0">
 </head>
 <body id="sing-in">
     <div>

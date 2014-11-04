@@ -18,7 +18,8 @@
             </span>
 
             <span class="admin_list_post_date fl-r">
-                <?= h($post['Post']['modified']);?>
+				更新日:
+				<?= $this->Spl->date_format($post['Post']['modified']);?>
             </span>
 
         </a>
