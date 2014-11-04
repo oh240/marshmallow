@@ -10,6 +10,7 @@
 /dist
 /tags
 *.mo
+.vagrant
 
 # IDE and editor specific files #
 #################################

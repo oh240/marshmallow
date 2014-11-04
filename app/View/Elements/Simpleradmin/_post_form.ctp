@@ -76,7 +76,7 @@
 		</div>
 	<?php endif ;?>
 
-	<?= $this->element('SimplerAdmin/img_add_modal');?>
-	<?= $this->element('SimplerAdmin/img_list_modal');?>
+	<?= $this->element('Simpleradmin/img_add_modal');?>
+	<?= $this->element('Simpleradmin/img_list_modal');?>
 
 </div>

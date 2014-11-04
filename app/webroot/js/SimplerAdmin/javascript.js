@@ -3,22 +3,22 @@ $(function(){
     /**
      * モーダルの出力ボタンを押した時にデフォルトのSubmit処理を無効にする。
      */
-    $('#ImgUpModalButton').click(function () {
-        event.preventDefault();
+    $('#ImgUpModalButton').click(function(e) {
+        e.preventDefault();
     });
 
 	/**
 	 * 画像の非同期でのアップロード処理
 	 */
-	$('#ImgUploadButton').click(function(){
-        event.preventDefault();
+	$('#ImgUploadButton').click(function(e){
+        e.preventDefault();
         var input_data = new FormData($('#UploadImgForm')[0]);
 		$.ajax({
 			type: "POST",
 			url: "/simpleradmin/ajax_img_upload",
 			data: input_data,
 			contentType: false,
-			processData: false
+			processData: false,
 		}).done(function(data) {
 			data = JSON.parse(data);
 			addImgTag(data);
@@ -28,8 +28,10 @@ $(function(){
 	});
 
 
-	$('#ImgAppendButton').click(function(){
-        event.preventDefault();
+	$('#ImgAppendButton').click(function(e){
+        e.preventDefault();
+		var img_area = $('#img_list_area');
+		img_area.empty();
         $.ajax({
 			type: "POST",
 			url: "/simpleradmin/ajax_img_load",
@@ -37,14 +39,14 @@ $(function(){
 			processData: false
 		}).done(function(data){
 			imgs = JSON.parse(data);
-			var img_area = $('#img_list_area');
 			var imgs_length = imgs.length;
+			var imgtag = '';
 			//foreachもどき
 			for(img_key=0;img_key<imgs_length;img_key++){
 				img_name = imgs[img_key].Img.name;
-				var imgtag = "<img class='chose_img_box' data-key="+img_key+" src='"+img_name+"' width=125 height=125 >";
-				img_area.append(imgtag);
+				imgtag = imgtag + "<img class='chose_img_box' src='"+img_name+"' width=125 height=125 >";
 			}
+			img_area.append(imgtag);
 		});
 	});
 
@@ -52,7 +54,7 @@ $(function(){
 	 * 画像をクリックした時
 	 */
 	$('body').on("click",".chose_img_box",function(){
-		var img_dir = $(this)[0].currentSrc;
+		var img_dir = $(this).attr('src');
 		addImgTag(img_dir);
 		$('#ImgListModal').modal('hide');
 	});

@@ -1,1 +1,1 @@
-<?= $this->element('SimplerAdmin/_post_form');?>
+<?= $this->element('Simpleradmin/_post_form');?>
