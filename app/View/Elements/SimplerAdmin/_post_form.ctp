@@ -48,6 +48,14 @@
 
 	<?= $this->Form->end();?>
 
+	<div class="">
+		<!-- Button trigger modal -->
+		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ImgAddModal">
+			新しく画像をアップロードして挿入する
+		</button>
+	</div>
+
+
 	<?php if ($this->action == 'edit_post'):?>
 		<div class="post_delete_button_area fl-r">
 			<?php
@@ -62,4 +70,7 @@
 			?>
 		</div>
 	<?php endif ;?>
+
+	<?= $this->element('SimplerAdmin/img_add_modal');?>
+
 </div>

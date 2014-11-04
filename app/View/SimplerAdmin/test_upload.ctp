@@ -1,7 +1,8 @@
 
 <?= 
-	$this->Form->create('Img',[
-		'type' => 'file'
+	$this->Form->create(false,[
+		'type' => 'file',
+		'id' => 'UploadImg'
 	]);
 ?>
 
