@@ -3,4 +3,4 @@
     doc_root: /vagrant/app/webroot
     sys_packages: ["git","vim"]
     dist: precise
-    php_packages: ["php5-cli","php-pear","php5-curl","php5-cgi","php5-gd","php5-mcrypt","php5-intl","php5-readline","php5-xsl","php5-xdebug","php5-sqlite"]
+    php_packages: ["php5-cli","php-pear","php5-curl","php5-cgi","php5-gd","php5-mysql","php5-mcrypt","php5-intl","php5-readline","php5-xsl","php5-xdebug","php5-sqlite"]
