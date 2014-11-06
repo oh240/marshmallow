@@ -38,6 +38,16 @@
 		?>
 	</div>
 
+	<div class="form-group">
+		<?=
+			$this->Form->input('Setting.disqus_user_id',[
+				'type' => 'text',
+				'class' => 'form-control',
+				'label' => 'Disqus User ID',
+			]);
+		?>
+	</div>
+
 	<div class="clearfix post_button_area fl-r">
 		<?=
 			$this->Form->submit('設定を保存',[
