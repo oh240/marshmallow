@@ -23,7 +23,6 @@
 					</li>
 				</ul>
 			</aside>
-			<?php if ($this->Session->check('Auth.User.id')) :?>
 				<aside class="widget widget_archive">
 					<h1 class="widget-title">管理ツール</h1>
 					<ul>
@@ -31,23 +30,24 @@
 							<?= 
 								$this->Html->link('ログインする',[
 									'controller' => 'simpleradmin',
-									'action' => '/'
+									'action' => 'login'
 								]);
 							?>
 						</li>
-						<?php if ($this->action === 'view') :?>
-							<li>
-								<?= 
-									$this->Html->link('この記事を編集する',[
-										'controller' => 'simpleradmin',
-										'action' => '/edit_post',
-										$this->params['pass'][0]
-									]);
-								?>
-							</li>
+						<?php if ($this->Session->check('Auth.User.id')) :?>
+							<?php if ($this->action === 'view') :?>
+								<li>
+									<?= 
+										$this->Html->link('この記事を編集する',[
+											'controller' => 'simpleradmin',
+											'action' => '/edit_post',
+											$this->params['pass'][0]
+										]);
+									?>
+								</li>
+							<?php endif;?>
 						<?php endif;?>
 					</ul>
 				</aside>
-			<?php endif;?>
 		</div><!-- #primary-sidebar -->
 	</div><!-- #secondary -->

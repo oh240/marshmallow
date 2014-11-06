@@ -1,3 +1,4 @@
+<?php if ($this->Session->check('Auth.User.id')) :?>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -12,15 +13,28 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
 				<li>
-					<a href="#">Dashboard</a>
+					<?= 
+						$this->Html->link('ブログに戻る',[
+							'controller' => '/'
+						]);
+					?>
 				</li>
 				<li>
-					<a href="#">Settings</a>
+					<?= 
+						$this->Html->link('設定',[
+							'action' => 'setting'
+						]);
+					?>
 				</li>
 				<li>
-					<a href="#">Help</a>
+					<?= 
+						$this->Html->link('ログアウト',[
+							'action' => 'logout'
+						]);
+					?>
 				</li>
             </ul>
         </div>
     </div>
 </nav>
+<?php endif;?>

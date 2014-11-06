@@ -16,6 +16,6 @@
 		</div><!-- .entry-meta -->
 	</header><!-- .entry-header -->
 	<div class="entry-content">
-		<?= nl2br($post['Post']['body']); ?>
+        <?= $this->Spl->echoPost($post['Post']['body']);?>
 	</div><!-- .entry-content -->
 </article>

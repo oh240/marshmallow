@@ -1,3 +1,8 @@
+<h3>
+	<span class="glyphicon glyphicon-wrench"></span> サイト設定
+</h3>
+<hr>
+
 <div class="clearfix">
 	<?=
 		$this->Form->create('Setting',[

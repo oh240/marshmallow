@@ -45,8 +45,7 @@ class SimpleradminController extends AppController
 
     public function login()
     {
-
-		$this->set('title_for_layout',$setting['Setting']['site_name']);
+		$this->set('title_for_layout','Simpler管理ツール');
 		$this->set('action_name','ログイン');
         if ($this->Auth->login()) {
             $this->redirect([
@@ -209,11 +208,6 @@ class SimpleradminController extends AppController
 			$this->request->data = $this->Setting->find('first');
 		}
     }
-
-	public function test_upload()
-	{
-	
-	}
 
 	public function ajax_img_load()
 	{

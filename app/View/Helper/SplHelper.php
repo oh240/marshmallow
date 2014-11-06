@@ -50,4 +50,11 @@ class SplHelper extends Helper {
 
         return h($tmp);
 	}
+
+    public function echoPost($content)
+    {
+        $content = nl2br($content);
+        return "<div id='spl_content_area'>{$content}</div>";
+    }
+
 }

@@ -1,4 +1,6 @@
-<h2>投稿記事一覧</h2>
+<h3>
+	<span class="glyphicon glyphicon-th-list"></span> 記事の一覧
+</h3>
 <hr/>
 <div class="list-group clearfix">
     <?php foreach ($posts as $post):?>

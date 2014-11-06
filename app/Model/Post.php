@@ -16,9 +16,6 @@ class Post extends AppModel
      */
     public $validate = array();
 
-    //The Associations below have been created with all possible keys, those that are not needed can be removed
-    //
-
     function afterFind($results, $primary = false)
     {
         foreach ($results as $result) {
@@ -43,7 +40,10 @@ class Post extends AppModel
             'conditions' => [
                 'published' => 1
             ],
-            'limit' => 5
+            'limit' => 5,
+            'order' => [
+                'Post.created DESC',
+            ]
         ]);
     }
 
