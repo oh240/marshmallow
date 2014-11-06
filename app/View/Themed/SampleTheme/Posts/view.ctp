@@ -15,7 +15,15 @@
 			</span> 
 		</div><!-- .entry-meta -->
 	</header><!-- .entry-header -->
+
 	<div class="entry-content">
         <?= $this->Spl->echoPost($post['Post']['body']);?>
 	</div><!-- .entry-content -->
+
+    <div id="spl_comment_wapper" class="entry-content">
+        <div id="disqus_thread"></div>
+    </div><!-- #spl_comment_wapper -->
+
 </article>
+
+<?= $this->element('Simpleradmin/DiscusCode');?>
