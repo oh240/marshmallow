@@ -44,7 +44,7 @@ $(function(){
 			//foreachもどき
 			for(img_key=0;img_key<imgs_length;img_key++){
 				img_name = imgs[img_key].Img.name;
-				imgtag = imgtag + "<img class='chose_img_box' src='"+img_name+"' width=125 height=125 >";
+				imgtag = imgtag + "<img class='chose_img_box' src='" + img_name + "' width=125 height=125 >";
 			}
 			img_area.append(imgtag);
 		});
@@ -63,14 +63,14 @@ $(function(){
 	 * imgタグをラッピングして返す
 	 */
 	function returnImgHtml(img_dir,width,height){
-		return "<img src='"+img_dir+"' width="+width+" height="+height+">";
+		return "<img src='" + img_dir + "' width=" + width + " height=" + height + ">";
 	}
 
 	/**
 	 * 入力内容の末尾に画像のImgタグを追加する
 	 */
 	function addImgTag(img_dir){
-		var img_tag = "<img src='"+img_dir+"'>";
+		var img_tag = "<a href='" + img_dir + "'> <img src='" + img_dir + "'> </a>";
 		var target_val = $('#PostBody').val();
 		$('#PostBody').val(target_val+img_tag);
 	}
