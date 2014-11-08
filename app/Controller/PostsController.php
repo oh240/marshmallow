@@ -26,14 +26,15 @@ class PostsController extends AppController {
 	}
 
 	/**
+	 * index action
 	 *
-	 *
+	 * @return void
 	 */
 	public function index()
 	{
 		$setting = $this->Setting->find('first');
-		$this->set('title_for_layout',$setting['Setting']['site_name']);
-		$this->set('meta_keyword','デフォルトのキーワード');
+		$this->set('title_for_layout', $setting['Setting']['site_name']);
+		$this->set('meta_keyword', 'デフォルトのキーワード');
 		$this->set('meta_description','デフォルトのディスクリプション');
 		$this->Paginator->settings = [
 			'conditions' => [

@@ -25,10 +25,18 @@
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 	Router::parseExtensions('xml', 'json');
-	Router::connect('/', array('controller' => 'posts', 'action' => 'index'));
+	// for quick install
+	if (!file_exists(APP . 'Config' . DS . 'database.php')) {
+		Router::connect('/', array('controller' => 'auto_install', 'action' => 'index', 'plugin' => 'auto_install'));
+        Router::connect('/auto_install/:action', array('controller' => 'auto_install','plugin' => 'auto_install'));
+
+    } else {
+		Router::connect('/', array('controller' => 'posts', 'action' => 'index'));
+    }
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */
+
 	Router::connect('/simpleradmin/:action', array('controller' => 'simpleradmin'));
 	Router::connect('/simpleradmin/:action/:id', array('controller' => 'simpleradmin'),array('pass'=>array('id'),'id'=>'[0-9]+'));
 	Router::connect('/simpleradmin', array('controller' => 'simpleradmin'));

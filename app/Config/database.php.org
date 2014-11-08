@@ -67,10 +67,10 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => '{insert_host}',
-		'login' => '{insert_user_name}',
-		'password' => '{insert_user_password}',
-		'database' => '{insert_database_name}',
+		'host' => 'localhost',
+		'login' => 'root',
+		'password' => '',
+		'database' => 'simpler',
 		'prefix' => '',
 		'encoding' => 'utf8',
 	);
