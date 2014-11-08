@@ -34,39 +34,28 @@ class AutoInstallController extends AutoInstallAppController
         if ($this->request->is('post') || $this->request->is('put')) {
             $data = $this->request->data;
 
-//            $data['Db']['host'] = 'localhost';
-//            $data['Db']['database_name'] = 'marshmallow';
-//            $data['Db']['user_name'] = 'root';
-//            $data['Db']['user_password'] = '';
-
             $db_check = $this->_dbcheck($data);
             //DBに接続
             if ($db_check) {
-                //database.phpを作成
-                //copy(APP . 'Config' . DS . 'database.php.default', APP . 'Config' . DS . 'database.php');
+                    //database.phpを作成 / 挙動が変わってしまうので書き込みは要検討
+                    //copy(APP . 'Config' . DS . 'database.php.default', APP . 'Config' . DS . 'database.php');
 
-                //database.phpの内容を投げられた内容に修正する。
-                $file = new File(APP . 'Config' . DS . 'database.php.default');
-                $config_file = $file->read();
-                $config_file = str_replace('{insert_host}',$data['Db']['host'],$config_file);
-                $config_file = str_replace('{insert_database_name}',$data['Db']['database_name'],$config_file);
-                $config_file = str_replace('{insert_user_name}',$data['Db']['user_name'],$config_file);
-                $config_file = str_replace('{insert_user_password}',$data['Db']['user_password'],$config_file);
-                debug($config_file);
+                    //database.phpの内容を投げられた内容に修正する。
+                    $file = new File(APP . 'Config' . DS . 'database.php.default');
+                    $config_file = $file->read();
+                    $config_file = str_replace('{insert_host}',$data['Db']['host'],$config_file);
+                    $config_file = str_replace('{insert_database_name}',$data['Db']['database_name'],$config_file);
+                    $config_file = str_replace('{insert_user_name}',$data['Db']['user_name'],$config_file);
+                    $config_file = str_replace('{insert_user_password}',$data['Db']['user_password'],$config_file);
 
-                file_put_contents(APP. 'Config' . DS . 'database.php.test',$config_file);
+                    //テストファイルを保存
+                    file_put_contents(APP. 'Config' . DS . 'database.php.test',$config_file);
 
-//                $config_content = $config_file->read();
-//
-//                debug($config_content);
-
-                //debug(strstr($config_content,'login'));
-
-//                $this->redirect([
-//                    'controller' => 'auto_install',
-//                    'action' => 'set_user',
-//                    'plugin' => 'auto_install'
-//                ]);
+    //                $this->redirect([
+    //                    'controller' => 'auto_install',
+    //                    'action' => 'set_user',
+    //                    'plugin' => 'auto_install'
+    //                ]);
 
             } else {
                 // 接続失敗したらfalseを返す。
@@ -77,7 +66,14 @@ class AutoInstallController extends AutoInstallAppController
 
     private function _dbcheck($data)
     {
-        return true;
+        //勝手に例外が投げられるので、こっちで用意したいエラーにしたい気もする。
+        $dbh = new PDO("mysql:host={$data['Db']['host']};dbname={$data['Db']['database_name']}",$data['Db']['user_name'],$data['Db']['user_password']);
+        debug($dbh);
+        try {
+            return true;
+        } catch(PDOException $e) {
+            //print "エラー:". $e->getMessage(). "<br>";
+        }
     }
 
     /**
@@ -97,15 +93,11 @@ class AutoInstallController extends AutoInstallAppController
      */
     public function set_user()
     {
+        if ($this->request->is('post')){
+            //初期データの投入
 
-
+            //処理成功時に完了画面を表示する
+        }
     }
 
-    /**
-     * 終了後の画面
-     */
-    public function completed()
-    {
-
-    }
 }
