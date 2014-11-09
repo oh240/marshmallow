@@ -9,13 +9,6 @@ class SimplerInitialMigrations extends CakeMigration {
 	public $description = 'simpler_initial_migrations';
 
     public $records = [
-        'User' => [
-            [
-                'id' => 1,
-                'nickname'=>  'admin',
-                'password' => '13df53db2d5c605c302b2d673e96864f91c9320b',
-            ]
-        ],
         'Post' => [
           [
               'id' => 1,

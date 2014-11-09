@@ -12,7 +12,7 @@ class AutoInstallController extends AutoInstallAppController
 {
     public $name = 'AutoInstall';
 
-    public $uses = [];
+    public $uses = ['User','Post','Setting'];
 
     public $components = [
         'Auth',
@@ -38,10 +38,10 @@ class AutoInstallController extends AutoInstallAppController
             //DBに接続
             if ($db_check) {
                     //database.phpを作成 / 挙動が変わってしまうので書き込みは要検討
-                    //copy(APP . 'Config' . DS . 'database.php.default', APP . 'Config' . DS . 'database.php');
+                    copy(APP . 'Config' . DS . 'database.php.default', APP . 'Config' . DS . 'database.php');
 
                     //database.phpの内容を投げられた内容に修正する。
-                    $file = new File(APP . 'Config' . DS . 'database.php.default');
+                    $file = new File(APP . 'Config' . DS . 'database.php');
                     $config_file = $file->read();
                     $config_file = str_replace('{insert_host}',$data['Db']['host'],$config_file);
                     $config_file = str_replace('{insert_database_name}',$data['Db']['database_name'],$config_file);
@@ -49,13 +49,13 @@ class AutoInstallController extends AutoInstallAppController
                     $config_file = str_replace('{insert_user_password}',$data['Db']['user_password'],$config_file);
 
                     //テストファイルを保存
-                    file_put_contents(APP. 'Config' . DS . 'database.php.test',$config_file);
+                    file_put_contents(APP. 'Config' . DS . 'database.php',$config_file);
 
-    //                $this->redirect([
-    //                    'controller' => 'auto_install',
-    //                    'action' => 'set_user',
-    //                    'plugin' => 'auto_install'
-    //                ]);
+                    //各テーブルを作成する。
+
+                    $this->redirect([
+                        'action' => 'set_user',
+                    ]);
 
             } else {
                 // 接続失敗したらfalseを返す。
@@ -68,7 +68,6 @@ class AutoInstallController extends AutoInstallAppController
     {
         //勝手に例外が投げられるので、こっちで用意したいエラーにしたい気もする。
         $dbh = new PDO("mysql:host={$data['Db']['host']};dbname={$data['Db']['database_name']}",$data['Db']['user_name'],$data['Db']['user_password']);
-        debug($dbh);
         try {
             return true;
         } catch(PDOException $e) {
@@ -81,11 +80,9 @@ class AutoInstallController extends AutoInstallAppController
      */
     public function db()
     {
-
         //渡された設定で接続できなければ接続を中断して、バリデーションエラーを出力する。
 
         //接続できたら、database.phpを作成する。
-
     }
 
     /**
@@ -94,10 +91,41 @@ class AutoInstallController extends AutoInstallAppController
     public function set_user()
     {
         if ($this->request->is('post')){
-            //初期データの投入
-
+            $this->_initData($this->request->data);
             //処理成功時に完了画面を表示する
         }
+    }
+
+    private function _initData($data)
+    {
+        $post_recode = [
+            'Post' => [
+                [
+                    'id' => 1,
+                    'title' => 'Hello World',
+                    'body' => 'この記事を編集して、Simplerを本格的に開始しましょう。',
+                    'published' => 1,
+                    'created' => '2014-11-04 21:13:00',
+                    'modified' => '2014-11-04 21:13:00',
+                ]
+            ],
+        ];
+
+        $setting_record = [
+            'Setting' => [
+                [
+                    'id' => 1,
+                    'site_name' => 'Simpler Blog',
+                    'theme_name' => 'Sample Theme',
+                    'email' => 'exmaple@xxx.com'
+                ],
+            ]
+        ];
+
+        //初期データの投入
+        $this->User->save($data);
+        $this->Post->save($post_recode);
+        $this->Setting->save($setting_record);
     }
 
 }

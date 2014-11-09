@@ -28,8 +28,6 @@
 	// for quick install
 	if (!file_exists(APP . 'Config' . DS . 'database.php')) {
 		Router::connect('/', array('controller' => 'auto_install', 'action' => 'index', 'plugin' => 'auto_install'));
-        Router::connect('/auto_install/:action', array('controller' => 'auto_install','plugin' => 'auto_install'));
-
     } else {
 		Router::connect('/', array('controller' => 'posts', 'action' => 'index'));
     }
@@ -52,4 +50,4 @@
  * Load the CakePHP default routes. Only remove this if you do not want to use
  * the built-in default routes.
  */
-	//require CAKE . 'Config' . DS . 'routes.php';
+	require CAKE . 'Config' . DS . 'routes.php';

@@ -3,7 +3,7 @@
         Marshallowにようこそ。
     </h2>
 
-    <h3>使用するデータベースの設定を記載してインストールを完了させましょう。</h3>
+    <h3>次に管理ユーザーの登録を行ってください。</h3>
     <hr/>
 
     <?=
@@ -17,10 +17,9 @@
         <p class="post-form-input-title">Marshmalowの管理ユーザー名</p>
 
         <?php
-            echo $this->Form->input('User.database_name',[
+            echo $this->Form->input('User.nickname',[
                 'class' => 'form-control',
                 'label' => false,
-                'value' => 'localhost'
             ]);
         ?>
     </div>
@@ -28,7 +27,7 @@
     <div class="form-group">
         <p class="post-form-input-title">管理ユーザーのパスワード</p>
         <?php
-        echo $this->Form->input('db.user_password',[
+        echo $this->Form->input('User.password',[
             'type' => 'password',
             'class' => 'form-control',
             'label' => false,
@@ -36,9 +35,9 @@
         ?>
     </div>
 
-    <div class="row clearfix post_button_area fl-r">
+    <div class="clearfix post_button_area fl-r">
         <?=
-            $this->Form->submit('投稿する',[
+            $this->Form->submit('作成する',[
                 'class' => 'btn btn-primary',
                 'name' => 'publish'
             ]);
