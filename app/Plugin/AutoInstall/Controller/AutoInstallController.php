@@ -149,7 +149,13 @@ class AutoInstallController extends AutoInstallAppController
     public function completed()
     {
         if($this->request->is('post')){
-            //このプラグインの削除
+
+            App::uses('Folder','Utility');
+
+            $this->folder = new Folder();
+            $this->folder->delete( APP . DS . 'Plugin' . DS . 'AutoInstall');
+
+            Cache::clear(false, '_cake_core_');
             $this->redirect([
                 'plugin' => null,
                 'controller' => 'simpleradmin',
