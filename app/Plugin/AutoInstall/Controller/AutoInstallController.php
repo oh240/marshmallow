@@ -6,13 +6,17 @@
  * Time: 0:39
  */
 
-App::uses('File','Utility');
+App::uses('File', 'Utility');
 
+/**
+ *
+ *
+ */
 class AutoInstallController extends AutoInstallAppController
 {
     public $name = 'AutoInstall';
 
-    public $uses = ['User','Post','Setting'];
+    public $uses = ['User', 'Post', 'Setting'];
 
     public $components = [
         'Auth',
@@ -37,25 +41,30 @@ class AutoInstallController extends AutoInstallAppController
             $db_check = $this->_dbcheck($data);
             //DBに接続
             if ($db_check) {
-                    //database.phpを作成 / 挙動が変わってしまうので書き込みは要検討
-                    copy(APP . 'Config' . DS . 'database.php.default', APP . 'Config' . DS . 'database.php');
+                //database.phpを作成 / 挙動が変わってしまうので書き込みは要検討
+                copy(APP . 'Config' . DS . 'database.php.default', APP . 'Config' . DS . 'database.php');
 
-                    //database.phpの内容を投げられた内容に修正する。
-                    $file = new File(APP . 'Config' . DS . 'database.php');
-                    $config_file = $file->read();
-                    $config_file = str_replace('{insert_host}',$data['Db']['host'],$config_file);
-                    $config_file = str_replace('{insert_database_name}',$data['Db']['database_name'],$config_file);
-                    $config_file = str_replace('{insert_user_name}',$data['Db']['user_name'],$config_file);
-                    $config_file = str_replace('{insert_user_password}',$data['Db']['user_password'],$config_file);
+                //database.phpの内容を投げられた内容に修正する。
+                $file = new File(APP . 'Config' . DS . 'database.php');
+                $config_file = $file->read();
+                $config_file = str_replace('{insert_host}', $data['Db']['host'], $config_file);
+                $config_file = str_replace('{insert_database_name}', $data['Db']['database_name'], $config_file);
+                $config_file = str_replace('{insert_user_name}', $data['Db']['user_name'], $config_file);
+                $config_file = str_replace('{insert_user_password}', $data['Db']['user_password'], $config_file);
 
-                    //テストファイルを保存
-                    file_put_contents(APP. 'Config' . DS . 'database.php',$config_file);
+                //テストファイルを保存
+                file_put_contents(APP . 'Config' . DS . 'database.php', $config_file);
 
-                    //各テーブルを作成する。
+                //各テーブルを作成する。
+                App::import('Model', 'ConnectionManager');
+                $db = ConnectionManager::getDataSource('default');
 
-                    $this->redirect([
-                        'action' => 'set_user',
-                    ]);
+                if ($db->isConnected()){
+                    $this->_runInitSql($db);
+                    $this->redirect(['action' => 'set_user']);
+                } else {
+                    $this->Session->setFlash('接続に失敗しました。入力項目を確認して下さい。','Flash/error');
+                }
 
             } else {
                 // 接続失敗したらfalseを返す。
@@ -64,25 +73,30 @@ class AutoInstallController extends AutoInstallAppController
         }
     }
 
+    private function _runInitSql($db)
+    {
+        $query_data = file_get_contents( APP . 'Config' . DS .'Sql' . DS .'init.sql');
+
+        $query_data = explode(';', $query_data);
+
+        foreach ($query_data as $sql_query) {
+            if (trim($sql_query) != ''){
+                $db->query($sql_query);
+            }
+        }
+
+        Cache::clear(false, '_cake_model_');
+    }
+
     private function _dbcheck($data)
     {
         //勝手に例外が投げられるので、こっちで用意したいエラーにしたい気もする。
-        $dbh = new PDO("mysql:host={$data['Db']['host']};dbname={$data['Db']['database_name']}",$data['Db']['user_name'],$data['Db']['user_password']);
+        $dbh = new PDO("mysql:host={$data['Db']['host']};dbname={$data['Db']['database_name']}", $data['Db']['user_name'], $data['Db']['user_password']);
         try {
             return true;
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             //print "エラー:". $e->getMessage(). "<br>";
         }
-    }
-
-    /**
-     * データベース・各テーブルの作成
-     */
-    public function db()
-    {
-        //渡された設定で接続できなければ接続を中断して、バリデーションエラーを出力する。
-
-        //接続できたら、database.phpを作成する。
     }
 
     /**
@@ -90,18 +104,23 @@ class AutoInstallController extends AutoInstallAppController
      */
     public function set_user()
     {
-        if ($this->request->is('post')){
+        if ($this->request->is('post')) {
             $this->_initData($this->request->data);
-            //処理成功時に完了画面を表示する
+            $this->redirect(['action' => 'completed']);
         }
     }
 
     private function _initData($data)
     {
+
+
+        //初期データの投入
+        $this->User->create();
+        $this->User->save($data);
+
         $post_recode = [
             'Post' => [
                 [
-                    'id' => 1,
                     'title' => 'Hello World',
                     'body' => 'この記事を編集して、Simplerを本格的に開始しましょう。',
                     'published' => 1,
@@ -111,21 +130,32 @@ class AutoInstallController extends AutoInstallAppController
             ],
         ];
 
+        $this->Post->create();
+        $this->Post->save($post_recode);
+
         $setting_record = [
             'Setting' => [
                 [
-                    'id' => 1,
                     'site_name' => 'Simpler Blog',
                     'theme_name' => 'Sample Theme',
                     'email' => 'exmaple@xxx.com'
                 ],
             ]
         ];
-
-        //初期データの投入
-        $this->User->save($data);
-        $this->Post->save($post_recode);
+        $this->Setting->create();
         $this->Setting->save($setting_record);
+    }
+
+    public function completed()
+    {
+        if($this->request->is('post')){
+            //このプラグインの削除
+            $this->redirect([
+                'plugin' => null,
+                'controller' => 'simpleradmin',
+                'action' => 'login'
+            ]);
+        }
     }
 
 }
