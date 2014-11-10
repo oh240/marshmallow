@@ -152,10 +152,12 @@ class AutoInstallController extends AutoInstallAppController
 
             App::uses('Folder','Utility');
 
+            Cache::clear(false, '_cake_core_');
+            Cache::clear(false, '_cake_model_');
+
             $this->folder = new Folder();
             $this->folder->delete( APP . DS . 'Plugin' . DS . 'AutoInstall');
 
-            Cache::clear(false, '_cake_core_');
             $this->redirect([
                 'plugin' => null,
                 'controller' => 'simpleradmin',
