@@ -1,6 +1,8 @@
 ---
     php_ppa: php5
     doc_root: /vagrant/app/webroot
-    sys_packages: ["git","vim"]
+    sys_packages: ["git","vim","tig","tree"]
     dist: precise
     php_packages: ["php5-cli","php-pear","php5-curl","php5-cgi","php5-gd","php5-mysql","php5-mcrypt","php5-intl","php5-readline","php5-xsl","php5-xdebug","php5-sqlite"]
+    pear_channels: ["pear.phpunit.de","components.ez.no","pear.symfony.com"]
+    pear_packages: ["pear.phpunit.de/PHPUnit-3.7.32"]
