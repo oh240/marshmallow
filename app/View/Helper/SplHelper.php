@@ -32,6 +32,8 @@ App::uses('Helper', 'View');
  */
 class SplHelper extends Helper {
 
+    public $helpers = ['Markdown.Markdown'];
+
 	public function date_format($datetime)
 	{
 		$format = 'Y/n/j H:i';
@@ -40,6 +42,7 @@ class SplHelper extends Helper {
 
 	public function Ellipsis($string, $limit = 30)
 	{
+        $string = $this->Markdown->transform($string);
         $remove_tags_string = strip_tags($string);
 
         $tmp = mb_substr($remove_tags_string,0,$limit);
@@ -53,6 +56,7 @@ class SplHelper extends Helper {
 
     public function echoPost($content)
     {
+        $content = $this->Markdown->transform($content);
         $content = nl2br($content);
         return "<div id='spl_content_area'>{$content}</div>";
     }

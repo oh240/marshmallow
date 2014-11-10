@@ -72,6 +72,7 @@ Cache::config('default', array('engine' => 'File'));
 
 CakePlugin::loadAll();
 
+CakePlugin::load(array('Markdown' => array('bootstrap' => true)));
 
 /**
  * You can attach event listeners to the request lifecycle as Dispatcher Filter. By default CakePHP bundles two filters:

@@ -13,6 +13,8 @@ class PostsController extends AppController {
 
 	public $uses = ['Post','Setting'];
 
+    public $helpers = ['Markdown.Markdown'];
+
 	public function beforeFilter()
 	{
 		parent::beforeFilter();
