@@ -38,7 +38,7 @@
             ]);
             ?>
         </div>
-
+        <hr/>
         <?=
         $this->Form->submit('最後のステップへ', [
             'class' => 'btn btn-primary btn-lg btn-block',
