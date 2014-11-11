@@ -12,7 +12,6 @@ class PostsController extends AppController {
     ];
 
 	public $uses = ['Post','Setting'];
-
     public $helpers = ['Markdown.Markdown'];
 
 	public function beforeFilter()
@@ -38,6 +37,7 @@ class PostsController extends AppController {
 		$this->set('title_for_layout', $setting['Setting']['site_name']);
 		$this->set('meta_keyword', 'デフォルトのキーワード');
 		$this->set('meta_description','デフォルトのディスクリプション');
+
 		$this->Paginator->settings = [
 			'conditions' => [
 				'Post.published' => 1
@@ -55,7 +55,6 @@ class PostsController extends AppController {
 	 */
 	public function view($id) 
 	{
-
 		$post = $this->Post->findByArticleId($id);
 
 		if (!$post){
