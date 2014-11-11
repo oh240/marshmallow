@@ -1,7 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
-App::uses('File','Utility');
+App::uses('File', 'Utility');
 
 /**
  * SimplerAdmin Controller
@@ -10,7 +10,7 @@ App::uses('File','Utility');
 class SimpleradminController extends AppController
 {
 
-    public $uses = ['User', 'Post','Setting','Img'];
+    public $uses = ['User', 'Post', 'Setting', 'Img', 'Archive'];
 
     public $components = array(
         'Paginator',
@@ -22,8 +22,8 @@ class SimpleradminController extends AppController
         parent::beforeFilter();
         $this->Auth->allow('user_add');
         $this->layout = 'simpleradmin';
-		$setting = $this->Setting->find('first');
-		$this->set('title_for_layout',$setting['Setting']['site_name']);
+        $setting = $this->Setting->find('first');
+        $this->set('title_for_layout', $setting['Setting']['site_name']);
     }
 
     public function user_add()
@@ -45,8 +45,8 @@ class SimpleradminController extends AppController
 
     public function login()
     {
-		$this->set('title_for_layout','Simpler管理ツール');
-		$this->set('action_name','ログイン');
+        $this->set('title_for_layout', 'Simpler管理ツール');
+        $this->set('action_name', 'ログイン');
         if ($this->Auth->login()) {
             $this->redirect([
                 'action' => 'index'
@@ -73,7 +73,8 @@ class SimpleradminController extends AppController
 
     public function posts()
     {
-		$this->set('action_name','記事の一覧');
+        $this->set('action_name', '記事の一覧');
+
         $this->Paginator->settings = [
             'order' => 'Post.created DESC',
             'limit' => 25,
@@ -85,7 +86,7 @@ class SimpleradminController extends AppController
 
     public function add_post()
     {
-		$this->set('action_name','記事の新規投稿');
+        $this->set('action_name', '記事の新規投稿');
         if ($this->request->is('post')) {
             $this->Post->create();
             if (isset($this->params['data']['publish'])) {
@@ -93,12 +94,11 @@ class SimpleradminController extends AppController
             } else {
                 $this->_draft_posts($this->request->data);
             }
-			
+
             //投稿した編集ページにリダイレクトするように修正する
-			$this->redirect([
-				'action' => 'edit_post',
-				'id' =>  $this->Post->getLastInsertId()
-			]);
+            $this->redirect([
+                'action' => 'edit_post', 'id' => $this->Post->getLastInsertId()
+            ]);
         }
 
     }
@@ -109,14 +109,26 @@ class SimpleradminController extends AppController
     private function _publish_post($data)
     {
         $data['Post']['published'] = true;
-		$data['Post']['release_date'] = date('Y-m-d H:i:s');
+        $release_date = time();
+        $data['Post']['release_date'] = date('Y-m-d H:i:s', $release_date);
+        $archive['Archive']['year'] = date('Y', $release_date);
+        $archive['Archive']['month'] = date('m', $release_date);
+
         if ($this->Post->save($data)) {
-            //下書き保存完了
+            if ($update_archive = $this->Archive->getCountId($release_date)) {
+                $this->Archive->id = $update_archive['Archive']['id'];
+                $count = $this->Post->countDatePosts($archive);
+                $this->Archive->saveField('count', $count);
+            } else {
+                $this->Archive->create();
+                $archive['Archive']['count'] = 1;
+                $this->Archive->save($archive);
+            }
+
             $this->Session->setFlash('記事の公開が完了しました', 'Flash/success');
+
         } else {
-            //下書き保存失敗時
             $this->Session->setFlash('記事の公開が失敗しました。入力内容を確認して下さい。', 'Flash/error');
-            //バリデーションでエラーに成ったらエラーを返す。
         }
 
     }
@@ -128,12 +140,9 @@ class SimpleradminController extends AppController
     {
         $data['Post']['published'] = false;
         if ($this->Post->save($data)) {
-            //下書き保存完了時
             $this->Session->setFlash('下書き保存を完了しました。', 'Flash/success');
         } else {
-            //下書き保存失敗時
             $this->Session->setFlash('記事の下書き保存に失敗しました。入力内容を確認して下さい。', 'Flash/error');
-
         }
 
     }
@@ -145,7 +154,7 @@ class SimpleradminController extends AppController
     public function edit_post($id = null)
     {
 
-		$this->set('action_name','記事の編集');
+        $this->set('action_name', '記事の編集');
         if ($this->request->is('post') || $this->request->is('put')) {
             $this->Post->id = $id;
             if (isset($this->params['data']['publish'])) {
@@ -167,9 +176,34 @@ class SimpleradminController extends AppController
     {
         if ($this->request->is('post')) {
 
+            $post = $this->Post->find('first', [
+                'conditions' => [
+                    'id' => $id
+                ],
+                'fields' => [
+                    'release_date',
+                ],
+                'callbacks' => false,
+            ]);
+
             $this->Post->id = $id;
+
             if ($this->Post->delete()) {
+
+                $this->Post->cacheQueries = false;
+
+
+                $release_date = strtotime($post['Post']['release_date']);
+                $archive['Archive']['year'] = date('Y',$release_date);
+                $archive['Archive']['month'] = date('m', $release_date);
+
+                if ($update_archive = $this->Archive->getCountId($release_date)) {
+                    $this->Archive->id = $update_archive['Archive']['id'];
+                    $count = $this->Post->countDatePosts($archive);
+                    $this->Archive->saveField('count', $count);
+                }
                 $this->Session->setFlash('記事の削除が完了しました', 'Flash/success');
+
             } else {
                 $this->Session->setFlash('記事の削除が完了しました', 'Flash/error');
             }
@@ -179,82 +213,77 @@ class SimpleradminController extends AppController
         $this->redirect(['action' => 'posts']);
     }
 
-    public function save_draft($id)
-    {
-
-    }
-
     public function setting()
     {
-		$this->set('action_name','サイト設定');
-		if ($this->request->is('post') || $this->request->is('put')){
+        $this->set('action_name', 'サイト設定');
+        if ($this->request->is('post') || $this->request->is('put')) {
 
-			$setting = $this->Setting->find('first',[
-				'fields' => [
-					'id'
-				]
-			]);
+            $setting = $this->Setting->find('first', [
+                'fields' => [
+                    'id'
+                ]
+            ]);
 
-			$this->Setting->id = $setting['Setting']['id'];
+            $this->Setting->id = $setting['Setting']['id'];
 
-			if($this->Setting->save($this->request->data)){
-				$this->Session->setFlash('設定の保存が完了しました。','Flash/success');
-				$this->redirect($this->referer());
-			} else {
-				$this->Session->setFlash('設定の保存が失敗しました。','Flash/error');
-			}
+            if ($this->Setting->save($this->request->data)) {
+                $this->Session->setFlash('設定の保存が完了しました。', 'Flash/success');
+                $this->redirect($this->referer());
+            } else {
+                $this->Session->setFlash('設定の保存が失敗しました。', 'Flash/error');
+            }
 
-		} else {
-			$this->request->data = $this->Setting->find('first');
-		}
+        } else {
+            $this->request->data = $this->Setting->find('first');
+        }
     }
 
-	public function ajax_img_load()
-	{
-	
-		$this->autoRender = false;
-		$this->autoLayout = false;
+    public function ajax_img_load()
+    {
 
-		if ($this->request->is('ajax')){
+        $this->autoRender = false;
+        $this->autoLayout = false;
 
-			$imgs = $this->Img->find('all',[
-				'fields' => [
-					'name'
-				],
-				'limit' => 6
-			]);
+        if ($this->request->is('ajax')) {
 
-			foreach($imgs as $key => $img){
-				$imgs[$key]['Img']['name'] = FULL_BASE_URL.DS.'files'.DS.$img['Img']['name'];
-			}
+            $imgs = $this->Img->find('all', [
+                'fields' => [
+                    'name'
+                ],
+                'limit' => 6
+            ]);
 
-			echo json_encode($imgs);
-			exit;
-		}
-	}
+            foreach ($imgs as $key => $img) {
+                $imgs[$key]['Img']['name'] = FULL_BASE_URL . DS . 'files' . DS . $img['Img']['name'];
+            }
 
-	public function ajax_img_upload()
-	{
-		$this->autoRender = false;
-		$this->autoLayout = false;
+            echo json_encode($imgs);
+            exit;
+        }
+    }
 
-		if ($this->request->is('ajax')){
+    public function ajax_img_upload()
+    {
+        $this->autoRender = false;
+        $this->autoLayout = false;
 
-			$mime_type = $this->Img->getMimeType($this->request->data['Img']['type']);
-			$name = $this->Img->getUniqueId().$mime_type;
+        if ($this->request->is('ajax')) {
 
-			move_uploaded_file($this->request->data['Img']['tmp_name'], POSTIMAGES.$name);
+            $mime_type = $this->Img->getMimeType($this->request->data['Img']['type']);
+            $name = $this->Img->getUniqueId() . $mime_type;
 
-			$this->Img->create();
-			$img_db_data['Img']['name'] = $name;
-			$img_db_data['Img']['size'] = $this->request->data['Img']['size'];
+            move_uploaded_file($this->request->data['Img']['tmp_name'], POSTIMAGES . $name);
 
-			if ($this->Img->save($img_db_data)){
+            $this->Img->create();
+            $img_db_data['Img']['name'] = $name;
+            $img_db_data['Img']['size'] = $this->request->data['Img']['size'];
+
+            if ($this->Img->save($img_db_data)) {
                 //生成したファイル名を返す。
-				echo json_encode(FULL_BASE_URL.DS.'files'.DS.$img_db_data['Img']['name']);
-			}
-			exit;
-		}
-	}
+                echo json_encode(FULL_BASE_URL . DS . 'files' . DS . $img_db_data['Img']['name']);
+            }
+            exit;
+        }
+    }
 
 }

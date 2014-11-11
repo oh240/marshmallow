@@ -19,8 +19,11 @@
 			<aside class="widget widget_archive">
 				<h1 class="widget-title">アーカイブ</h1>
 				<ul>
-					<li>
-					</li>
+                    <?php foreach ($archives as $archive) : ?>
+                        <li>
+                            <?= $this->Spl->archiveLink($archive);?>
+                        </li>
+                    <?php endforeach; ?>
 				</ul>
 			</aside>
 				<aside class="widget widget_archive">

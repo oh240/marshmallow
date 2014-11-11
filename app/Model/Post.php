@@ -47,8 +47,28 @@ class Post extends AppModel
         ]);
     }
 
-    function findByArchive()
+    /**
+     * 余計な記号を取り除いて、月別の検索ができるようにする。
+     * @param $date
+     * @return mixed
+     */
+    function dateTrimSymbole($date)
     {
+        $date = str_replace(['-', '/'], '', $date);
+        return $date;
+    }
 
+    //アーカイブデータのために月別の集計を計測します。
+    function countDatePosts($archive)
+    {
+        $count = $this->find('count', [
+            'conditions' => [
+                'Post.published' => 1,
+                'DATE_FORMAT(release_date,"%Y%m")' => $archive['Archive']['year'] . $archive['Archive']['month']
+            ],
+            'callbacks' => false,
+        ]);
+
+        return $count;
     }
 }

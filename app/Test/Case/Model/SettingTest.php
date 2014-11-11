@@ -37,4 +37,10 @@ class SettingTest extends CakeTestCase {
 		parent::tearDown();
 	}
 
+    public function test_test()
+    {
+
+    }
+
+
 }

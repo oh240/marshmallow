@@ -32,7 +32,7 @@ App::uses('Helper', 'View');
  */
 class SplHelper extends Helper {
 
-    public $helpers = ['Markdown.Markdown'];
+    public $helpers = ['Markdown.Markdown','Html'];
 
 	public function date_format($datetime)
 	{
@@ -59,6 +59,19 @@ class SplHelper extends Helper {
         $content = $this->Markdown->transform($content);
         $content = nl2br($content);
         return "<div id='spl_content_area'>{$content}</div>";
+    }
+
+    public function archiveLink($archive)
+    {
+        $link_text = "{$archive['Archive']['year']} / {$archive['Archive']['month']} ({$archive['Archive']['count']})";
+        $text = $this->Html->link($link_text,[
+            'controller' => '/',
+            '?' => [
+                'month' => $archive['Archive']['year'] . $archive['Archive']['month']
+            ]
+        ]);
+
+        return $text;
     }
 
 }
