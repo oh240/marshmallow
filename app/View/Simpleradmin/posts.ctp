@@ -2,6 +2,8 @@
 	<span class="glyphicon glyphicon-th-list"></span> 記事の一覧
 </h3>
 <hr/>
+<?= $this->element('Simpleradmin/post_filter');?>
+<hr/>
 <div class="list-group clearfix">
     <?php foreach ($posts as $post):?>
 

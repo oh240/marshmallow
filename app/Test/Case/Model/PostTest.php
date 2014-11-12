@@ -106,4 +106,20 @@ class PostTest extends CakeTestCase
 
 	}
 
+    public function testReturnFilterType()
+    {
+        $expaced = true;
+        $testcase = 'public';
+        $result = $this->Post->returnFilterType($testcase);
+
+        $this->assertEquals($expaced,$result);
+
+        $expaced = false;
+        $testcase = 'draft';
+        $result = $this->Post->returnFilterType($testcase);
+
+        $this->assertEquals($expaced,$result);
+
+    }
+
 }

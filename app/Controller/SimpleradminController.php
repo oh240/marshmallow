@@ -75,10 +75,28 @@ class SimpleradminController extends AppController
     {
         $this->set('action_name', '記事の一覧');
 
-        $this->Paginator->settings = [
-            'order' => 'Post.created DESC',
-            'limit' => 25,
-        ];
+        //カテゴリー
+        if(isset($this->request->query['type'])){
+
+            $filter_type = $this->Post->returnFilterType($this->request->query['type']);
+
+            $this->Paginator->settings = [
+                'conditions' => [
+                    'Post.published' => $filter_type,
+                ],
+                'order' => 'Post.created DESC',
+                'limit' => 25,
+            ];
+
+        } else {
+
+            $this->Paginator->settings = [
+                'order' => 'Post.created DESC',
+                'limit' => 25,
+            ];
+
+            $this->set('post_type',false);
+        }
 
         $posts = $this->paginate('Post');
         $this->set(compact('posts'));
@@ -285,5 +303,7 @@ class SimpleradminController extends AppController
             exit;
         }
     }
+
+
 
 }

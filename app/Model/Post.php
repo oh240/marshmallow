@@ -71,4 +71,18 @@ class Post extends AppModel
 
         return $count;
     }
+
+    function returnFilterType($filter_query)
+    {
+        switch ($filter_query){
+            case 'draft':
+                return false;
+
+            case 'public':
+                return true;
+
+            default:
+                return false;
+        }
+    }
 }
