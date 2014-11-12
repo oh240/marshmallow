@@ -16,14 +16,6 @@ class Post extends AppModel
      */
     public $validate = array();
 
-//    function afterFind($results, $primary = false)
-//    {
-//        foreach ($results as $result) {
-//            $result['Post']['body'] = nl2br($result['Post']['body']);
-//        }
-//        return $results;
-//    }
-
     function findByArticleId($id = null)
     {
         return $this->find('first', [

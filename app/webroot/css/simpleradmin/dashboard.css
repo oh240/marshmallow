@@ -122,3 +122,8 @@ span.publish_status{
 .img_button_area {
 	margin-top: 10px ;
 }
+
+.post-form-preview-button{
+    margin-left: 3%;
+    margin-top: 20px;
+}

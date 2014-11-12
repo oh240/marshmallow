@@ -8,7 +8,9 @@
 
 	<div class="form-group">
 
-		<p class="post-form-input-title">記事のタイトル</p>
+		<p class="post-form-input-title">
+            記事のタイトル
+        </p>
 
 		<?php
 			echo $this->Form->input('Post.title',[
@@ -18,15 +20,15 @@
 		?>
 
 		<div class="img_button_area">
-			<!-- Button trigger modal -->
+
 			<button id="ImgUpModalButton" class="btn btn-default" data-toggle="modal" data-target="#ImgAddModal">
 				<span class="glyphicon glyphicon-upload"></span> 画像をアップロードして追加
 			</button>
-			<!-- Button trigger modal -->
+
 			<button id="ImgAppendButton" class="btn btn-default" data-toggle="modal" data-target="#ImgListModal">
 				<span class="glyphicon glyphicon-camera"></span> 既存の画像から追加
 			</button>
-		</div>
+        </div>
 	</div>
 
 	<div class="form-group">
