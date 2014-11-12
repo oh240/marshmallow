@@ -16,6 +16,16 @@ class Post extends AppModel
      */
     public $validate = array();
 
+    public $belongsTo = [
+        'Category' => [
+            'counterCache' => [
+                'count' => [
+                    'Post.published' => 1,
+                ],
+            ],
+        ]
+    ];
+
     function findByArticleId($id = null)
     {
         return $this->find('first', [

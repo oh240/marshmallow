@@ -6,6 +6,22 @@
 		$this->Form->hidden('Post.id');
 	?>
 
+    <div class="form-group">
+
+        <p class="post-form-input-title">
+            記事のカテゴリー
+        </p>
+
+        <?=
+            $this->Form->input('Post.category_id',[
+                'type' => 'select',
+                'class' => 'form-control',
+                'options' => $category_list,
+                'label' => false
+            ]);
+        ?>
+    </div>
+
 	<div class="form-group">
 
 		<p class="post-form-input-title">

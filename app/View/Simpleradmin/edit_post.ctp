@@ -5,7 +5,6 @@
     <?php
         echo $this->Spl->previewLink($this->request->data);
     ?>
-
 </div>
 
 <hr>

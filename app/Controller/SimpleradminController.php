@@ -10,7 +10,7 @@ App::uses('File', 'Utility');
 class SimpleradminController extends AppController
 {
 
-    public $uses = ['User', 'Post', 'Setting', 'Img', 'Archive'];
+    public $uses = ['User', 'Post', 'Setting', 'Img', 'Archive','Category'];
 
     public $components = array(
         'Paginator',
@@ -91,7 +91,6 @@ class SimpleradminController extends AppController
 
         $this->set(compact('all_count','public_count','draft_count'));
 
-
         //カテゴリー
         if(isset($this->request->query['type'])){
 
@@ -124,6 +123,8 @@ class SimpleradminController extends AppController
     public function add_post()
     {
         $this->set('action_name', '記事の新規投稿');
+        $category_list = $this->Category->returnSelectLists();
+        $this->set(compact('category_list'));
         if ($this->request->is('post')) {
             $this->Post->create();
             if (isset($this->params['data']['publish'])) {
@@ -190,7 +191,8 @@ class SimpleradminController extends AppController
      */
     public function edit_post($id = null)
     {
-
+        $category_list = $this->Category->returnSelectLists();
+        $this->set(compact('category_list'));
         $this->set('action_name', '記事の編集');
         if ($this->request->is('post') || $this->request->is('put')) {
             $this->Post->id = $id;
@@ -211,24 +213,22 @@ class SimpleradminController extends AppController
 
     public function post_delete($id = null)
     {
-        if ($this->request->is('post')) {
+        $post = $this->Post->find('first', [
+            'conditions' => [
+                'Post.id' => $id
+            ],
+            'fields' => [
+                'release_date',
+            ],
+        ]);
 
-            $post = $this->Post->find('first', [
-                'conditions' => [
-                    'id' => $id
-                ],
-                'fields' => [
-                    'release_date',
-                ],
-                'callbacks' => false,
-            ]);
+        if ($this->request->is('post')) {
 
             $this->Post->id = $id;
 
             if ($this->Post->delete()) {
 
                 $this->Post->cacheQueries = false;
-
 
                 $release_date = strtotime($post['Post']['release_date']);
                 $archive['Archive']['year'] = date('Y',$release_date);

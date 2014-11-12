@@ -51,3 +51,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   ENGINE =InnoDB
   AUTO_INCREMENT =1
   DEFAULT CHARSET =utf8;
+
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `count` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB
+  AUTO_INCREMENT=1
+  DEFAULT CHARSET=utf8;
