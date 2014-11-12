@@ -74,4 +74,13 @@ class SplHelper extends Helper {
         return $text;
     }
 
+    public function syntaxHighlighterLoad()
+    {
+        echo $this->Html->css('vendor/syntaxhighlighter/shCore');
+        echo $this->Html->css('vendor/syntaxhighlighter/shThemeDefault');
+        echo $this->Html->script('vendor/syntaxhighlighter/shCore');
+        echo $this->Html->script('vendor/syntaxhighlighter/shAutoloader');
+        echo $this->Html->script('vendor/syntaxhighlighter/shAllload');
+    }
+
 }
