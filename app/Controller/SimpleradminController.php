@@ -71,6 +71,33 @@ class SimpleradminController extends AppController
         ]);
     }
 
+    public function categories()
+    {
+        $this->set('action_name', 'カテゴリーの一覧');
+
+        $this->Paginator->settings = [
+            'order' => 'Category.count DESC',
+            'limit' => 10,
+        ];
+
+        $categories = $this->paginate('Category');
+        $this->set(compact('categories'));
+    }
+
+    public function category_delete($id)
+    {
+
+        if ($this->request->is('post')){
+            $this->Category->id = $id;
+            if ($this->Category->delete()){
+                $this->Session->setFlash('カテゴリーの削除が完了しました', 'Flash/success');
+            } else {
+                $this->Session->setFlash('カテゴリーの削除に失敗しました', 'Flash/error');
+            }
+        }
+        $this->redirect(['action' => 'categories']);
+    }
+
     public function posts()
     {
         $this->set('action_name', '記事の一覧');
@@ -138,7 +165,6 @@ class SimpleradminController extends AppController
                 'action' => 'edit_post', 'id' => $this->Post->getLastInsertId()
             ]);
         }
-
     }
 
     /**
@@ -242,7 +268,7 @@ class SimpleradminController extends AppController
                 $this->Session->setFlash('記事の削除が完了しました', 'Flash/success');
 
             } else {
-                $this->Session->setFlash('記事の削除が完了しました', 'Flash/error');
+                $this->Session->setFlash('記事の削除に失敗しました', 'Flash/error');
             }
 
         }

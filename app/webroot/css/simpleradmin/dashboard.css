@@ -106,6 +106,16 @@
     font-weight: bold;
 }
 
+.admin_list_category_count{
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 2%;
+}
+
+.admin_list_category_del_icon {
+    font-size: 16px;
+}
+
 span.publish_status{
     margin-right: 1em;
     padding: .3em 0.6em .3em;
