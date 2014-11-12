@@ -74,4 +74,21 @@ class SplHelper extends Helper {
         return $text;
     }
 
+    public function previewLink($data)
+    {
+        if ($data['Post']['published']){
+            return $this->Html->link('記事を確認する',[
+                'controller' => 'posts',
+                'action' => 'view',
+                'id' => $data['Post']['id']
+            ],[
+                'class' => 'btn btn-success btn-sm post-form-preview-button fl-l',
+                'role' => 'button',
+                'target' => '_blink'
+            ]);
+        }
+
+        return false;
+    }
+
 }
