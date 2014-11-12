@@ -75,6 +75,23 @@ class SimpleradminController extends AppController
     {
         $this->set('action_name', '記事の一覧');
 
+        $all_count = $this->Post->find('count');
+
+        $public_count = $this->Post->find('count',[
+            'conditions' => [
+                'Post.published' => true,
+            ]
+        ]);
+
+        $draft_count = $this->Post->find('count',[
+            'conditions' => [
+                'Post.published' => false,
+            ]
+        ]);
+
+        $this->set(compact('all_count','public_count','draft_count'));
+
+
         //カテゴリー
         if(isset($this->request->query['type'])){
 
@@ -88,6 +105,8 @@ class SimpleradminController extends AppController
                 'limit' => 25,
             ];
 
+            $this->set('filter_type',$this->request->query['type']);
+
         } else {
 
             $this->Paginator->settings = [
@@ -95,7 +114,7 @@ class SimpleradminController extends AppController
                 'limit' => 25,
             ];
 
-            $this->set('post_type',false);
+            $this->set('filter_type',false);
         }
 
         $posts = $this->paginate('Post');
