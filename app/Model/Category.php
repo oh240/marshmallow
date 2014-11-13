@@ -31,6 +31,23 @@ class Category extends AppModel {
 //		)
 //	);
 
+    public $validate = [
+        'name' => [
+            'notempty' => [
+                'rule' => ['notempty'],
+                'message' => 'カテゴリー名は必ず入力してください',
+            ],
+            'maxLength' => [
+                'rule' => ['maxLength', 60],
+                'message' => 'カテゴリーは60字以内で入力してください'
+            ],
+            'isUnique' => [
+                'rule' => ['isUnique'],
+                'message' => "既に登録されているカテゴリーです"
+            ]
+        ],
+    ];
+
     function returnSelectLists()
     {
 

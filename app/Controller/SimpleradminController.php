@@ -321,7 +321,6 @@ class SimpleradminController extends AppController
             }
 
             echo json_encode($imgs);
-            exit;
         }
     }
 
@@ -345,10 +344,38 @@ class SimpleradminController extends AppController
                 //生成したファイル名を返す。
                 echo json_encode(FULL_BASE_URL . DS . 'files' . DS . $img_db_data['Img']['name']);
             }
-            exit;
         }
     }
 
+
+    /**
+     * カテゴリー追加のajax処理
+     */
+    public function ajax_category_add()
+    {
+        $this->autoRender = false;
+        $this->autoLayout = false;
+        $this->viewClass = 'Json';
+
+        if ($this->request->is('ajax')) {
+
+            $this->Category->create();
+
+            $data['Category']['name'] = $this->request->data['name'];
+            $data['Category']['count'] = 0;
+
+            if (!$this->Category->save($data)){
+                //バリデーションがかかった時エラー内容を表示する。
+                $check['check'] = false;
+                $check['message'] = "<div class='error-message alert alert-danger category_add_error'>" . $this->Category->validationErrors['name'][0] . "</div>";
+
+            } else {
+                $check['check'] = true;
+            }
+
+            echo json_encode($check);
+        }
+    }
 
 
 }

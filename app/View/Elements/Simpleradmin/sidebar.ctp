@@ -20,9 +20,19 @@
 				]);
 			?>
 		</li>
+        <li>
+            <?=
+            $this->Html->link('<span class="glyphicon glyphicon-list-alt"></span> カテゴリー管理',[
+                'action' => 'categories',
+            ],[
+                'escape' => false
+            ]);
+            ?>
+
+        </li>
 		<li>
 			<?=
-				$this->Html->link('<span class="glyphicon glyphicon-wrench"></span> 設定',[
+				$this->Html->link('<span class="glyphicon glyphicon-cog"></span> 設定',[
 					'action' => 'setting',
 				],[
 					'escape' => false

@@ -1,5 +1,10 @@
 <h3>
     <span class="glyphicon glyphicon-th-list"></span> カテゴリーの一覧
+    <!-- モーダルを呼び出す -->
+    <button class="btn btn-success fl-r " data-toggle="modal" data-target="#category_add_modal">
+        カテゴリーを追加する
+    </button>
+    <?= $this->element('Simpleradmin/_category_modal');?>
 </h3>
 <hr/>
 <ul class="list-group clearfix">
