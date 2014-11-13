@@ -21,8 +21,8 @@ class PostsController extends AppController
         parent::beforeFilter();
         $this->Auth->allow();
         $setting = $this->Setting->find('first');
-        $this->theme = 'SampleTheme';
-        $this->layout = 'theme';
+        $this->theme = 'Pure';
+        //$this->layout = 'theme';
         $recent_posts = $this->Post->findByRecentArticles();
 
         $archives = $this->Archive->find('all',[
