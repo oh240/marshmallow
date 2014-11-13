@@ -14,7 +14,6 @@ class Post extends AppModel
      *
      * @var array
      */
-    public $validate = array();
 
     public $belongsTo = [
         'Category' => [
@@ -30,8 +29,8 @@ class Post extends AppModel
     {
         return $this->find('first', [
             'conditions' => [
-                'id' => $id,
-                'published' => 1
+                'Post.id' => $id,
+                'Post.published' => 1
             ]
         ]);
     }
@@ -40,7 +39,7 @@ class Post extends AppModel
     {
         return $this->find('all', [
             'conditions' => [
-                'published' => 1
+                'Post.published' => 1
             ],
             'limit' => 5,
             'order' => [

@@ -28,7 +28,6 @@ class SimpleradminController extends AppController
 
     public function user_add()
     {
-
         if ($this->request->is('post')) {
             $this->User->create();
 
@@ -40,7 +39,6 @@ class SimpleradminController extends AppController
                 'action' => 'login'
             ]);
         }
-
     }
 
     public function login()
@@ -52,7 +50,6 @@ class SimpleradminController extends AppController
                 'action' => 'index'
             ]);
         }
-
     }
 
     public function logout()

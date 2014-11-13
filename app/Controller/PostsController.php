@@ -28,9 +28,9 @@ class PostsController extends AppController
         $archives = $this->Archive->find('all',[
             'limit' => 5,
             'fields' => [
-                'year',
-                'month',
-                'count'
+                'Archive.year',
+                'Archive.month',
+                'Archive.count'
             ]
         ]);
 
