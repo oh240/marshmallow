@@ -52,7 +52,7 @@
 				</div><!-- #primary -->
 			</div><!-- #main-content -->
 			<?= $this->element('sidebar');?>
-		</div><!-- #main -->
+	</div><!-- #main -->
 	<footer id="colophon" class="site-footer" role="contentinfo">
 		<div class="site-info">
 			<a href="http://ja.wordpress.org/">Powered by Simpler</a>

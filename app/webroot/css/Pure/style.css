@@ -163,7 +163,7 @@ h3 {
     }
 
     .header {
-        margin: 30% 2em 0;
+        margin: 10% 2em 0;
         text-align: right;
     }
 
@@ -189,13 +189,64 @@ h3 {
 }
 
 .sidebar_lists li{
-    margin: 10px 0;
+    margin-bottom: 10px;
+    margin-top: 10px;
     font-size: 16px;
     list-style-type: none;
 }
 
 
+.sidebar_lists_caterogy {
+    font-size: 18px;
+    margin-left: 6%;
+}
+
+.sidebar_category_title{
+    font-weight: bold;
+}
+
 .sidebar_lists a{
     color: #fff;
-    font-weight: bold;
+}
+
+
+.sidebar_tools_login{
+    text-align: left;
+    list-style: none;
+    margin-left: 6%;
+}
+
+.spl_post_image {
+    width: 90%;
+    text-align: center;
+    margin: 10px 0;
+    padding: 5px;
+    border: 1px #EEE solid;
+}
+
+.nk-page-up-button-wp {
+    width: 48px;
+    height: 48px;
+    display: none;
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+}
+
+.nk-page-up-button-wp p{
+    width: 48px;
+    height: 48px;
+    display: block;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-image: url("../../img/allow.png");
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.nk-page-up-button-wp p:hover{
+    opacity: 0.4;
+    cursor: pointer;
 }

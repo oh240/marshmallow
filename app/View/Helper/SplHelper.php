@@ -40,7 +40,7 @@ class SplHelper extends Helper {
 		return date($format,strtotime($datetime));
 	}
 
-	public function Ellipsis($string, $limit = 30)
+	public function Ellipsis($string, $limit = 100)
 	{
         $string = $this->Markdown->transform($string);
         $remove_tags_string = strip_tags($string);

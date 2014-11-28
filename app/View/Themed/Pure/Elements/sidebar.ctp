@@ -5,21 +5,36 @@
             <?= $setting['Setting']['site_name'];?>
         </h1>
         <nav class="nav">
+
             <ul class="nav-list">
                 <li class="nav-item">
-                    <a class="pure-button" href="http://purecss.io">Twitter</a>
+                    <a class="pure-button" href="http://twitter.com/webuilder240com">Twitter</a>
                 </li>
                 <li class="nav-item">
-                    <a class="pure-button" href="http://yuilibrary.com">Github</a>
+                    <a class="pure-button" href="http://github.com/oh240">Github</a>
                 </li>
             </ul>
         </nav>
         <ul class="sidebar_lists">
-            <li>php</li>
-            <li>html</li>
-            <li>others</li>
-            <li>ログイン</li>
-            <li>
+            <li class="sidebar_category_title">Category</li>
+            <?php foreach ($sidebar_categories as $sidebar_category) :?>
+                <li class="sidebar_lists_caterogy">
+                    <?=
+                        $this->Html->link($sidebar_category['Category']['name'],[
+                            'action' => '/',
+                            '?' => [
+                                'cat' => $sidebar_category['Category']['id']
+                            ]
+                        ]);
+                    ?>
+                </li>
+            <?php endforeach;?>
+        </ul>
+
+        <ul class="sidebar_lists">
+            <li class="sidebar_category_title">Tools</li>
+
+            <li class="sidebar_tools_login">
                 <?=
                     $this->Html->link('ログインする',[
                         'controller' => 'simpleradmin',

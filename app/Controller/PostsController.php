@@ -13,16 +13,18 @@ class PostsController extends AppController
         'RequestHandler'
     ];
 
-    public $uses = ['Post', 'Setting','Archive'];
+    public $uses = ['Post', 'Setting','Archive','Category'];
     public $helpers = ['Markdown.Markdown'];
 
     public function beforeFilter()
     {
         parent::beforeFilter();
+        Configure::write('debug', 0);
+
         $this->Auth->allow();
         $setting = $this->Setting->find('first');
         $this->theme = 'Pure';
-        //$this->layout = 'theme';
+
         $recent_posts = $this->Post->findByRecentArticles();
 
         $archives = $this->Archive->find('all',[
@@ -34,8 +36,13 @@ class PostsController extends AppController
             ]
         ]);
 
-        $this->set(compact('recent_posts', 'setting', 'archives'));
-        Configure::write('debug', 0);
+        $sidebar_categories = $this->Category->find('all',[
+            'fields' => [
+                'name'
+            ]
+        ]);
+
+        $this->set(compact('recent_posts', 'setting', 'archives','sidebar_categories'));
     }
 
     /**

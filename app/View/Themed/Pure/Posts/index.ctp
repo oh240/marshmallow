@@ -15,10 +15,6 @@
                     ]);
                 ?>
             </h2>
-            <p class="post-meta">
-                <a class="post-category post-category-design" href="#">CSS</a>
-                <a class="post-category post-category-pure" href="#">Pure</a>
-            </p>
         </header>
         <div class="post-description">
             <p>
